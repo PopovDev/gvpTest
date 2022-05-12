@@ -5,17 +5,13 @@
     </div>
     <div class="controls">
       <div class="bottom">
-        <div class="_progress">      </div>
-        <div class="_retractable">        </div>
+        <div class="_progress"></div>
+        <div class="_retractable"></div>
       </div>
-
     </div>
+    {{ videos }}
   </div>
-
-
 </template>
-
-
 <style scoped lang="scss">
 
 @mixin flexbox-layout {
@@ -31,6 +27,7 @@
   width: 100%;
   position: relative;
   height: 100%;
+
   > .container {
     @include flexbox-layout;
     width: 100%;
@@ -64,10 +61,12 @@
         flex-basis: 20%;
         background: #ff0000;
       }
+
       > ._retractable {
         width: 100%;
         flex-basis: 80%;
       }
+
       &:hover {
         height: 10%;
       }
@@ -78,45 +77,32 @@
 </style>
 
 <script lang="ts">
-import Vue from 'vue'
-import { LoadableVideo } from '~/store/type';
+import {Action, Component, Getter, State, Vue, Watch,} from 'nuxt-property-decorator';
+import {VideosState} from "~/store/type";
+import db from '~/plugins/firebase';
+import {collection, onSnapshot, Unsubscribe} from "firebase/firestore";
 
-
-
-declare interface VideoData {
-  videoElement: HTMLVideoElement | null;
-  video: LoadableVideo | null;
-}
-
-export default Vue.extend({
-  name: 'CVideo',
-  data(): VideoData {
-    return {
-      videoElement: null,
-      video: null
-    }
-  },
-  methods: {
-    loadVideo(video: LoadableVideo): void {
-      if (this.videoElement) {
-        this.video = video;
-        this.videoElement.src = video.src;
-        this.videoElement.poster = video.poster;
-        this.videoElement.load();
-      }
-    }
-  },
-  mounted() {
+@Component
+export default class CVideo extends Vue {
+  private videoElement: HTMLVideoElement | null = null;
+  @Getter("videos/list") private videos!: VideosState;
+  @Action("videos/fetchVideos") private fetchVideos!: Function;
+  private unsubscribe!: Unsubscribe;
+  public async fetch() {
+    await this.fetchVideos();
+  }
+  private mounted() {
     this.videoElement = this.$refs.video as HTMLVideoElement;
-    //const video: LoadableVideo = {
-    //  src: 'videos/1.mp4',
-    //  poster: 'videos/1.jpg',
-    //  name: 'Video 1'
-    //}
-    //this.loadVideo(video);
+    const col = collection(db, "videos");
+    this.unsubscribe = onSnapshot(col, async (querySnapshot) => {
+      await this.fetchVideos();
+    });
 
   }
+  private beforeDestroy() {
+    this.unsubscribe();
+  }
 
-});
+}
 
 </script>
