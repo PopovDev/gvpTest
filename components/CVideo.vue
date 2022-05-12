@@ -5,12 +5,8 @@
     </div>
     <div class="controls">
       <div class="bottom">
-        <div class="_progress">
-
-        </div>
-        <div class="_retractable">
-
-        </div>
+        <div class="_progress">      </div>
+        <div class="_retractable">        </div>
       </div>
 
     </div>
@@ -83,12 +79,9 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { LoadableVideo } from '~/store/type';
 
-declare interface LoadableVideo {
-  src: string;
-  poster: string;
-  name: string;
-}
+
 
 declare interface VideoData {
   videoElement: HTMLVideoElement | null;
@@ -115,12 +108,12 @@ export default Vue.extend({
   },
   mounted() {
     this.videoElement = this.$refs.video as HTMLVideoElement;
-    const video: LoadableVideo = {
-      src: 'videos/1.mp4',
-      poster: 'videos/1.jpg',
-      name: 'Video 1'
-    }
-    this.loadVideo(video);
+    //const video: LoadableVideo = {
+    //  src: 'videos/1.mp4',
+    //  poster: 'videos/1.jpg',
+    //  name: 'Video 1'
+    //}
+    //this.loadVideo(video);
 
   }
 
