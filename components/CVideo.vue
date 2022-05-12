@@ -4,22 +4,6 @@
       <video ref="video"></video>
     </div>
     <div class="controls">
-      <div class="top">
-        <div class="screen">
-          <div class="full_screen">
-          </div>
-          <div class="picture_in_picture">
-          </div>
-        </div>
-        <div class="volume">
-          <div class="volume_icon">
-          </div>
-        </div>
-      </div>
-      <div class="middle">
-        <div class="play_btn">
-        </div>
-      </div>
       <div class="bottom">
         <div class="_progress">
 
@@ -54,6 +38,7 @@
           </div>
         </div>
       </div>
+
     </div>
   </div>
 
@@ -316,48 +301,32 @@
 </style>
 
 <script lang="ts">
-import Vue from 'vue'
+import {Action, Component, Getter, State, Vue, Watch,} from 'nuxt-property-decorator';
+import {VideosState} from "~/store/type";
+import db from '~/plugins/firebase';
+import {collection, onSnapshot, Unsubscribe} from "firebase/firestore";
 
-declare interface LoadableVideo {
-  src: string;
-  poster: string;
-  name: string;
-}
-
-declare interface VideoData {
-  videoElement: HTMLVideoElement | null;
-  video: LoadableVideo | null;
-}
-
-export default Vue.extend({
-  name: 'CVideo',
-  data(): VideoData {
-    return {
-      videoElement: null,
-      video: null
-    }
-  },
-  methods: {
-    loadVideo(video: LoadableVideo): void {
-      if (this.videoElement) {
-        this.video = video;
-        this.videoElement.src = video.src;
-        this.videoElement.poster = video.poster;
-        this.videoElement.load();
-      }
-    }
-  },
-  mounted() {
+@Component
+export default class CVideo extends Vue {
+  private videoElement: HTMLVideoElement | null = null;
+  @Getter("videos/list") private videos!: VideosState;
+  @Action("videos/fetchVideos") private fetchVideos!: Function;
+  private unsubscribe!: Unsubscribe;
+  public async fetch() {
+    await this.fetchVideos();
+  }
+  private mounted() {
     this.videoElement = this.$refs.video as HTMLVideoElement;
-    const video: LoadableVideo = {
-      src: 'videos/1.mp4',
-      poster: 'videos/1.jpg',
-      name: 'Video 1'
-    }
-    this.loadVideo(video);
+    const col = collection(db, "videos");
+    this.unsubscribe = onSnapshot(col, async (querySnapshot) => {
+      await this.fetchVideos();
+    });
 
   }
+  private beforeDestroy() {
+    this.unsubscribe();
+  }
 
-});
+}
 
 </script>
