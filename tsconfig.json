@@ -6,7 +6,8 @@
     "lib": [
       "ESNext",
       "ESNext.AsyncIterable",
-      "DOM"
+      "DOM",
+      "DOM.Iterable",
     ],
     "esModuleInterop": true,
     "allowJs": true,
@@ -28,6 +29,7 @@
       "@nuxtjs/axios",
       "@types/node",
       "@types/firebase",
+      "@types/hls.js",
     ]
   },
   "exclude": [
