@@ -13,7 +13,7 @@ export default {
     ]
   },
   css: [],
-  plugins: [],
+  plugins: ["~/plugins/firebase.ts"],
   components: true,
   buildModules: ['@nuxt/typescript-build'],
   modules: ['@nuxtjs/axios'],
