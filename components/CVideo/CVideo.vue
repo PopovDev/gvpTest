@@ -19,7 +19,7 @@
       </div>
       <div class="middle">
         <div class="play_btn" @click="playClick">
-          {{ onPause ? 'Pause' : 'Play' }}
+          {{ paused ? 'Pause' : 'Play' }}
         </div>
       </div>
       <div class="bottom">
@@ -55,8 +55,8 @@
 <style scoped lang="scss" src="./style.scss"></style>
 
 <script lang="ts">
-import {Action, Component, Getter, State, Vue, Watch, } from 'nuxt-property-decorator';
-import {LoadableVideo, VideosState} from "~/store/type";
+import {Action, Component, Getter, Vue, Watch} from 'nuxt-property-decorator';
+import {LoadableVideo} from "~/store/type";
 import ProgressBar from "~/components/CVideo/ProgressBar.vue";
 
 @Component({components: {ProgressBar}, name: 'CVideo'})
@@ -64,17 +64,19 @@ export default class CVideo extends Vue {
   private videoElement: HTMLVideoElement | null = null;
   @Getter("videos/list") private videos!: LoadableVideo[];
   @Action("videos/fetchVideos") private fetchVideos!: Function;
-  private onPause: boolean = true;
+  private paused: boolean = true;
   private nowVideo: LoadableVideo | null = null;
 
   public async fetch() {
     await this.fetchVideos();
   }
 
-  private videoProgress: number = 70;
+  private videoProgress: number = 0;
 
   private onProgressChange(progress: number) {
+    if (!this.videoElement) return;
     this.videoProgress = progress;
+    this.videoElement.currentTime = progress / 100 * this.videoElement.duration;
   }
 
   private setNowVideo(video: LoadableVideo | null) {
@@ -86,23 +88,29 @@ export default class CVideo extends Vue {
     }
   }
 
-  @Watch("onPause")
+  @Watch("paused")
   private onPauseChange() {
-    if (this.onPause)
+    if (this.paused)
       this.videoElement!.pause();
     else
       this.videoElement!.play();
 
   }
 
+  private timeUpdate() {
+    if (!this.videoElement) return;
+    this.videoProgress = (this.videoElement.currentTime / this.videoElement.duration || 0) * 100;
+    console.log(this.videoProgress);
+  }
+
   private mounted() {
     this.videoElement = this.$refs.video as HTMLVideoElement;
+    this.videoElement.ontimeupdate = this.timeUpdate;
     this.setNowVideo(this.videos[0]);
-
   }
 
   public playClick() {
-    this.onPause = !this.onPause;
+    this.paused = !this.paused;
   }
 
 }
