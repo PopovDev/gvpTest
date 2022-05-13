@@ -1,5 +1,5 @@
 <template>
-  <div class="video">
+  <div class="video" draggable="false">
     <div class="container">
       <video ref="video"></video>
     </div>
@@ -17,13 +17,13 @@
           </div>
         </div>
       </div>
-      <div class="middle">
-        <div class="play_btn" @click="playClick">
-          {{ onPause ? 'Pause' : 'Play' }}
+      <div class="middle" @click="playClick">
+        <div class="play_btn">
+          {{ !paused ? 'Pause' : 'Play' }}
         </div>
       </div>
       <div class="bottom">
-        <div class="progress"></div>
+        <ProgressBar :progress="videoProgress" @progressChange="onProgressChange" class="progress"/>
         <div class="retractable">
           <div class="left">
             <div class="prev_video"></div>
@@ -79,21 +79,29 @@
 <style scoped lang="scss" src="./style.scss"></style>
 
 <script lang="ts">
-import {Action, Component, Getter, State, Vue, Watch,} from 'nuxt-property-decorator';
-import {LoadableVideo, VideosState} from "~/store/type";
+import {Action, Component, Getter, Vue, Watch} from 'nuxt-property-decorator';
+import {LoadableVideo} from "~/store/type";
+import ProgressBar from "~/components/CVideo/ProgressBar.vue";
 
-@Component
+@Component({components: {ProgressBar}, name: 'CVideo'})
 export default class CVideo extends Vue {
   private videoElement: HTMLVideoElement | null = null;
   @Getter("videos/list") private videos!: LoadableVideo[];
   @Action("videos/fetchVideos") private fetchVideos!: Function;
-  private onPause: boolean = true;
+  private paused: boolean = true;
+  private nowVideo: LoadableVideo | null = null;
 
   public async fetch() {
     await this.fetchVideos();
   }
 
-  private nowVideo: LoadableVideo | null = null;
+  private videoProgress: number = 0;
+
+  private onProgressChange(progress: number) {
+    if (!this.videoElement) return;
+    this.videoProgress = progress;
+    this.videoElement.currentTime = progress / 100 * this.videoElement.duration;
+  }
 
   private setNowVideo(video: LoadableVideo | null) {
     if (video) {
@@ -104,23 +112,30 @@ export default class CVideo extends Vue {
     }
   }
 
-  @Watch("onPause")
+  @Watch("paused")
   private onPauseChange() {
-    if (this.onPause)
+    if (this.paused)
       this.videoElement!.pause();
     else
       this.videoElement!.play();
+  }
 
+  private timeUpdate() {
+    if (!this.videoElement) return;
+    this.videoProgress = (this.videoElement.currentTime / this.videoElement.duration || 0) * 100;
   }
 
   private mounted() {
     this.videoElement = this.$refs.video as HTMLVideoElement;
+    this.videoElement.ontimeupdate = this.timeUpdate;
+    this.videoElement.onpause = () => this.paused = true;
+    this.videoElement.onplay = () => this.paused = false;
     this.setNowVideo(this.videos[0]);
-
+    console.log("mounted");
   }
 
   public playClick() {
-    this.onPause = !this.onPause;
+    this.paused = !this.paused;
   }
 
 }
