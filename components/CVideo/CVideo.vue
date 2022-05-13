@@ -1,7 +1,7 @@
 <template>
   <div class="video" ref="videoMain" draggable="false">
     <div class="container">
-      <video ref="video"></video>
+      <video ref="video" preload="metadata"></video>
     </div>
     <div class="controls" :class="{show: paused||progressChanging}">
       <div class="top">
@@ -92,6 +92,13 @@ import ProgressBar from "~/components/CVideo/ProgressBar.vue";
 
 @Component({components: {ProgressBar}, name: 'CVideo'})
 export default class CVideo extends Vue {
+  private pageName: string = '';
+  public head() {
+    return {
+      title: this.pageName,
+    };
+  }
+
   private videoElement: HTMLVideoElement | null = null;
   @Getter("videos/list") private videos!: LoadableVideo[];
   @Action("videos/fetchVideos") private fetchVideos!: Function;
@@ -121,6 +128,7 @@ export default class CVideo extends Vue {
     this.videoElement.src = video.src;
     this.videoElement.poster = video.poster;
     this.videoElement.load();
+    this.pageName = video.name;
   }
 
   @Watch("paused")
