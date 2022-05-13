@@ -33,8 +33,8 @@
             <div class="icon"></div>
             <div class="settings">
               <div class="menu">
-                <div class="graphics"></div>
-                <div class="speed"></div>
+                <div class="graphics">1</div>
+                <div class="speed">2</div>
               </div>
             </div>
 
