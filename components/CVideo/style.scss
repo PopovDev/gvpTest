@@ -87,11 +87,13 @@
 
       > .progress {
         flex-basis: 20%;
+        z-index: 3;
         background: #ff0000;
       }
 
       > .retractable {
         flex-basis: 80%;
+        z-index: 4;
         flex-direction: row;
         justify-content: space-between;
         overflow: hidden;
@@ -157,36 +159,117 @@
           }
           > .settings {
             opacity: 0;
-            width: 0%;
+            width: 0;
             transition: opacity 0.5s, width 0.5s;
             height: 100%;
             @include flexbox-layout;
-            justify-content: space-around;
             background: #736d6d;
+            > *{
+              transition: width 0.5s;
+            }
 
             > .menu {
               width: 100%;
               height: 100%;
               @include flexbox-layout;
               flex-direction: row;
-
+              justify-content: space-around;
               > .graphics {
-                width: 0;
-                order: 1;
+                width: 40%;
+                order: 2;
+                @include flexbox-layout;
                 transition: width 0.5s;
                 height: 100%;
                 background: #31a205;
-              }
 
+                > .graphic {
+                  width: 30%;
+                  height: 0;
+                  position: absolute;
+                  z-index: 5;
+                  transition: width 0.5s;
+                  background: #8005a2;
+                  @include flexbox-layout;
+                  justify-content: space-around;
+                  > *{
+                    transition: width 0.5s;
+                  }
+
+                  > .low {
+                    width: 30%;
+                    height: 100%;
+                    background: #a20505;
+
+                  }
+
+                  > .lowHd {
+                    width: 30%;
+                    height: 100%;
+                    background: #a20505;
+                  }
+
+                  > .hd {
+                    width: 30%;
+                    height: 100%;
+                    background: #a20505;
+
+                  }
+                  &:hover {
+                    width: 60%;
+                  }
+                }
+                &:hover {
+                  .graphic{
+                    height: 10vh;
+                    transform: translate(0, -60%);
+                  }
+                }
+              }
               > .speed {
-                width: 0;
-                order: 2;
+                width: 40%;
+                order: 1;
+                @include flexbox-layout;
                 transition: width 0.5s;
                 height: 100%;
                 background: #263f1d;
+                > .speeds{
+                  @include flexbox-layout;
+                  flex-direction: row;
+                  position: absolute;
+                  z-index: 4;
+                  height: 0;
+                  width: 100%;
+                  > .slow {
+                    width: 30%;
+                    height: 100%;
+                    background: #a20505;
+                  }
+                  > .normal {
+                    width: 30%;
+                    height: 100%;
+                    background: #a20505;
+                  }
+                  > .fast {
+                    width: 30%;
+                    height: 100%;
+                    background: #a20505;
+                  }
+                  &:hover {
+                    width: 60%;
+                  }
+                }
+                &:hover {
+                  .speeds{
+                    height: 60%;
+                  }
+                }
+
               }
 
 
+            }
+            &:hover {
+              width: 85%;
             }
           }
 
@@ -199,6 +282,8 @@
             height: 90%;
             background: #ff0000;
           }
+
+
         }
       }
 
@@ -223,6 +308,7 @@
 
             > .up_arrow {
               opacity: 0;
+              height: 0;
             }
           }
         }

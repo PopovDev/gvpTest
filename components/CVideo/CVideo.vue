@@ -33,8 +33,32 @@
             <div class="icon"></div>
             <div class="settings">
               <div class="menu">
-                <div class="graphics">1</div>
-                <div class="speed">2</div>
+                <div class="graphics">
+                  <div class="graphics_icon">
+                  </div>
+                  <div class="graphic">
+                    <div class="low">
+                    </div>
+                    <div class="lowHd">
+                    </div>
+                    <div class="hd">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="speed">
+                  <div class="speed_icon">
+                  </div>
+                  <div class="speeds">
+                    <div class="slow">
+                    </div>
+                    <div class="normal">
+                    </div>
+                    <div class="fast">
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
 
