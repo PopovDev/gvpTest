@@ -17,9 +17,9 @@
           </div>
         </div>
       </div>
-      <div class="middle">
-        <div class="play_btn" @click="playClick">
-          {{ paused ? 'Pause' : 'Play' }}
+      <div class="middle" @click="playClick">
+        <div class="play_btn">
+          {{ !paused ? 'Pause' : 'Play' }}
         </div>
       </div>
       <div class="bottom">
@@ -94,18 +94,18 @@ export default class CVideo extends Vue {
       this.videoElement!.pause();
     else
       this.videoElement!.play();
-
   }
 
   private timeUpdate() {
     if (!this.videoElement) return;
     this.videoProgress = (this.videoElement.currentTime / this.videoElement.duration || 0) * 100;
-    console.log(this.videoProgress);
   }
 
   private mounted() {
     this.videoElement = this.$refs.video as HTMLVideoElement;
     this.videoElement.ontimeupdate = this.timeUpdate;
+    this.videoElement.onpause = () => this.paused = true;
+    this.videoElement.onplay = () => this.paused = false;
     this.setNowVideo(this.videos[0]);
   }
 

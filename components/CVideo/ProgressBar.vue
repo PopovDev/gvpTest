@@ -67,6 +67,7 @@ export default class CVideo extends Vue {
     width: 100%
     height: 100%
     background: #ff0000
+    cursor: pointer
 
     .bar
       background: #3400ff
