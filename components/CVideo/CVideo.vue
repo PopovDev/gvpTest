@@ -11,16 +11,9 @@
           <div class="picture_in_picture" @click="picInPicClick">
           </div>
         </div>
-
       </div>
       <div class="volume">
-        <div class="progressInCircle">
-          <div class="circle">
-            <div class="mask">
-              <div class="fill"></div>
-            </div>
-          </div>
-        </div>
+        <Volume/>
       </div>
       <div class="middle" @click="playClick">
         <div class="play_btn">
@@ -34,7 +27,7 @@
                        @progressChange="onProgressChange"
                        :total-time="totalTime"
                        :loaded-frags="loadedFrags"
-                       class="progress"/>
+                       class="progress_bar"/>
 
         </div>
         <div class="retractable">
@@ -95,10 +88,12 @@
 import {Action, Component, Getter, Vue, Watch} from 'nuxt-property-decorator';
 import {LoadableVideo} from "~/store/type";
 import ProgressBar from "~/components/CVideo/ProgressBar.vue";
+import Volume from "~/components/CVideo/Volume.vue";
 
-@Component({components: {ProgressBar}, name: 'CVideo'})
+@Component({components: {Volume, ProgressBar}, name: 'CVideo'})
 export default class CVideo extends Vue {
   private pageName: string = '';
+
   public head() {
     return {
       title: this.pageName,

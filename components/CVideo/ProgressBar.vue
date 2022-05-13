@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div
-      class="progress"
+      class="progress_bar"
       ref="progress"
       @mousedown="onMouseDown"
     >
@@ -112,7 +112,7 @@ $loaded-color: rgba(151, 252, 140, 0.44)
   height: 100%
 
 .main
-  > .progress
+  > .progress_bar
     cursor: pointer
     display: flex
     flex-direction: column

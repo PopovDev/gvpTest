@@ -99,35 +99,10 @@
       z-index: 5;
       aspect-ratio: 1;
       width: 20%;
-      background: #0003ff;
+      background: #a20505;
       top: 0;
       opacity: 1;
       left: 0;
-      @include flexbox-layout;
-
-      > .progressInCircle{
-        opacity: 1;
-        width: 90%;
-        aspect-ratio: 1;
-        position: absolute;
-        z-index: 6;
-        border-radius: 50%;
-        background: #66ff00;
-        @include flexbox-layout;
-        border: 1px solid #cdcbd0;
-        > .circle{
-          width: 80%;
-          aspect-ratio: 1;
-          position: absolute;
-
-          align-content: center;
-          z-index: 7;
-          border-radius: 50%;
-          background: #d300ff;
-
-          border: 1px solid #cdcbd0;
-        }
-      }
 
       &:hover{
         opacity: 0.7!important;
@@ -176,7 +151,7 @@
         > *{
           position: absolute;
         }
-        > .progress {
+        > .progress_bar {
           bottom: 0;
           height: 100%;
           z-index: 3;
