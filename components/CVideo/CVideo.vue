@@ -11,8 +11,14 @@
           <div class="picture_in_picture" @click="picInPicClick">
           </div>
         </div>
-        <div class="volume">
-          <div class="volume_icon">
+
+      </div>
+      <div class="volume">
+        <div class="progressInCircle">
+          <div class="circle">
+            <div class="mask">
+              <div class="fill"></div>
+            </div>
           </div>
         </div>
       </div>
