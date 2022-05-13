@@ -107,6 +107,7 @@ export default class CVideo extends Vue {
     this.videoElement.onpause = () => this.paused = true;
     this.videoElement.onplay = () => this.paused = false;
     this.setNowVideo(this.videos[0]);
+    console.log("mounted");
   }
 
   public playClick() {
