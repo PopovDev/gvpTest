@@ -57,15 +57,23 @@
         @include flexbox-layout;
         flex-direction: row;
         justify-content: space-around;
-        > .full_screen{
+        >*{
+          transition: background-color 0.5s;
+        }
+        @mixin flBtn{
           width: 40%;
           height: 70%;
           background: #2b830b;
+          cursor: pointer;
+          &:hover{
+            background: #0003ff;
+          }
+        }
+        > .full_screen{
+          @include flBtn;
         }
         > .picture_in_picture{
-          width: 40%;
-          height: 70%;
-          background: #2b830b;
+          @include flBtn;
         }
 
       }
@@ -85,7 +93,7 @@
         cursor: pointer;
         user-select: none;
         width: 5%;
-        height: 10%;
+        aspect-ratio: 1;
         transition: opacity 0.5s;
         @include flexbox-layout;
         background: red;

@@ -1,14 +1,14 @@
 <template>
-  <div class="video" draggable="false">
+  <div class="video" ref="videoMain" draggable="false">
     <div class="container">
       <video ref="video"></video>
     </div>
     <div class="controls" :class="{show: paused||progressChanging}">
       <div class="top">
         <div class="screen">
-          <div class="full_screen">
+          <div class="full_screen" @click="fullScreenClick">
           </div>
-          <div class="picture_in_picture">
+          <div class="picture_in_picture" @click="picInPicClick">
           </div>
         </div>
         <div class="volume">
@@ -22,7 +22,8 @@
         </div>
       </div>
       <div class="bottom" :class="{open:progressChanging}">
-        <ProgressBar :progress="videoProgress" @holdChange="progressChangingEmitted" @progressChange="onProgressChange" class="progress"/>
+        <ProgressBar :progress="videoProgress" @holdChange="progressChangingEmitted" @progressChange="onProgressChange"
+                     class="progress"/>
         <div class="retractable">
           <div class="left">
             <div class="prev_video"></div>
@@ -90,6 +91,7 @@ export default class CVideo extends Vue {
   private paused: boolean = true;
   private nowVideo: LoadableVideo | null = null;
   private progressChanging: boolean = false;
+
   public async fetch() {
     await this.fetchVideos();
   }
@@ -118,12 +120,33 @@ export default class CVideo extends Vue {
     else
       this.videoElement!.play();
   }
+
   private progressChangingEmitted(e: boolean) {
     this.progressChanging = e;
   }
+
   private timeUpdate() {
     if (!this.videoElement) return;
     this.videoProgress = (this.videoElement.currentTime / this.videoElement.duration || 0) * 100;
+  }
+
+  private fullScreenClick() {
+    const videoMain = this.$refs.videoMain as any;
+    if (!videoMain) return;
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      videoMain.requestFullscreen();
+    }
+  }
+
+  private picInPicClick() {
+    if (!this.videoElement) return;
+    if (document.pictureInPictureElement) {
+      document.exitPictureInPicture();
+    } else if (this.videoElement.requestPictureInPicture) {
+      this.videoElement.requestPictureInPicture();
+    }
   }
 
   private mounted() {
