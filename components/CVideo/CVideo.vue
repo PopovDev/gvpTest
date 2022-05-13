@@ -3,8 +3,7 @@
     <div class="container">
       <video ref="video"></video>
     </div>
-    <div class="controls">
-
+    <div class="controls" :class="{show: paused||progressChanging}">
       <div class="top">
         <div class="screen">
           <div class="full_screen">
@@ -22,8 +21,8 @@
           {{ !paused ? 'Pause' : 'Play' }}
         </div>
       </div>
-      <div class="bottom">
-        <ProgressBar :progress="videoProgress" @progressChange="onProgressChange" class="progress"/>
+      <div class="bottom" :class="{open:progressChanging}">
+        <ProgressBar :progress="videoProgress" @holdChange="progressChangingEmitted" @progressChange="onProgressChange" class="progress"/>
         <div class="retractable">
           <div class="left">
             <div class="prev_video"></div>
@@ -90,7 +89,7 @@ export default class CVideo extends Vue {
   @Action("videos/fetchVideos") private fetchVideos!: Function;
   private paused: boolean = true;
   private nowVideo: LoadableVideo | null = null;
-
+  private progressChanging: boolean = false;
   public async fetch() {
     await this.fetchVideos();
   }
@@ -119,7 +118,9 @@ export default class CVideo extends Vue {
     else
       this.videoElement!.play();
   }
-
+  private progressChangingEmitted(e: boolean) {
+    this.progressChanging = e;
+  }
   private timeUpdate() {
     if (!this.videoElement) return;
     this.videoProgress = (this.videoElement.currentTime / this.videoElement.duration || 0) * 100;

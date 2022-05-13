@@ -23,15 +23,22 @@ export default class CVideo extends Vue {
     return progress;
   }
 
+  @Emit('holdChange')
+  private holdChange(hold: boolean) {
+    this.hold = hold;
+    return hold;
+  }
+
   private hold: boolean = false;
 
   private onMouseDown(event: MouseEvent) {
-    this.hold = true;
+
+    this.holdChange(true);
     this.progressMove(event, true);
   }
 
   private onMouseUp() {
-    this.hold = false;
+    this.holdChange(false);
   }
 
   private progressMove(e: MouseEvent, isClick: boolean = false) {

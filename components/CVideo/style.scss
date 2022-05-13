@@ -289,7 +289,7 @@
         }
       }
 
-      &:hover {
+      @mixin openState{
         height: 10%;
         > .retractable {
           > .left {
@@ -315,9 +315,14 @@
           }
         }
       }
+      &:hover {
+        @include openState;
+      }
+      &.open {
+        @include openState;
+      }
     }
-
-    &:hover {
+    @mixin showState{
       .middle {
         opacity: 1;
       }
@@ -326,6 +331,12 @@
         opacity: 1;
         margin-bottom: 0;
       }
+    }
+    &:hover {
+      @include showState;
+    }
+    &.show {
+      @include showState;
     }
   }
 }
