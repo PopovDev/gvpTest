@@ -1,5 +1,5 @@
 <template>
-  <div class="video">
+  <div class="video" draggable="false">
     <div class="container">
       <video ref="video"></video>
     </div>
@@ -23,7 +23,7 @@
         </div>
       </div>
       <div class="bottom">
-        <div class="progress"></div>
+        <ProgressBar :progress="videoProgress" @progressChange="onProgressChange" class="progress"/>
         <div class="retractable">
           <div class="left">
             <div class="prev_video"></div>
@@ -55,21 +55,27 @@
 <style scoped lang="scss" src="./style.scss"></style>
 
 <script lang="ts">
-import {Action, Component, Getter, State, Vue, Watch,} from 'nuxt-property-decorator';
+import {Action, Component, Getter, State, Vue, Watch, } from 'nuxt-property-decorator';
 import {LoadableVideo, VideosState} from "~/store/type";
+import ProgressBar from "~/components/CVideo/ProgressBar.vue";
 
-@Component
+@Component({components: {ProgressBar}, name: 'CVideo'})
 export default class CVideo extends Vue {
   private videoElement: HTMLVideoElement | null = null;
   @Getter("videos/list") private videos!: LoadableVideo[];
   @Action("videos/fetchVideos") private fetchVideos!: Function;
   private onPause: boolean = true;
+  private nowVideo: LoadableVideo | null = null;
 
   public async fetch() {
     await this.fetchVideos();
   }
 
-  private nowVideo: LoadableVideo | null = null;
+  private videoProgress: number = 70;
+
+  private onProgressChange(progress: number) {
+    this.videoProgress = progress;
+  }
 
   private setNowVideo(video: LoadableVideo | null) {
     if (video) {
