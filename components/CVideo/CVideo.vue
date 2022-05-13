@@ -23,8 +23,11 @@
       </div>
       <div class="bottom" :class="{open:progressChanging}">
         <div class="progress_bar">
-          <ProgressBar :progress="videoProgress" @holdChange="progressChangingEmitted"
+          <ProgressBar :progress="videoProgress"
+                       @holdChange="progressChangingEmitted"
                        @progressChange="onProgressChange"
+                       :total-time="totalTime"
+                       :loaded-frags="loadedFrags"
                        class="progress"/>
 
         </div>
@@ -95,26 +98,29 @@ export default class CVideo extends Vue {
   private paused: boolean = true;
   private nowVideo: LoadableVideo | null = null;
   private progressChanging: boolean = false;
+  private totalTime: number = 0;
+  private videoProgress: number = 0;
+  private loadedFrags: TimeRanges | null = null;
 
   public async fetch() {
     await this.fetchVideos();
   }
 
-  private videoProgress: number = 0;
 
   private onProgressChange(progress: number) {
     if (!this.videoElement) return;
     this.videoProgress = progress;
     this.videoElement.currentTime = progress / 100 * this.videoElement.duration;
+
   }
 
   private setNowVideo(video: LoadableVideo | null) {
-    if (video) {
-      this.nowVideo = video;
-      this.videoElement!.src = video.src;
-      this.videoElement!.poster = video.poster;
-      this.videoElement!.load();
-    }
+    if (!this.videoElement) return;
+    if (!video) return;
+    this.nowVideo = video;
+    this.videoElement.src = video.src;
+    this.videoElement.poster = video.poster;
+    this.videoElement.load();
   }
 
   @Watch("paused")
@@ -132,6 +138,9 @@ export default class CVideo extends Vue {
   private timeUpdate() {
     if (!this.videoElement) return;
     this.videoProgress = (this.videoElement.currentTime / this.videoElement.duration || 0) * 100;
+    this.loadedFrags = this.videoElement.buffered;
+    this.totalTime = this.videoElement.duration;
+    if (isNaN(this.totalTime)) this.totalTime = 0;
   }
 
   private fullScreenClick() {
@@ -146,10 +155,12 @@ export default class CVideo extends Vue {
 
   private picInPicClick() {
     if (!this.videoElement) return;
-    if (document.pictureInPictureElement) {
-      document.exitPictureInPicture();
-    } else if (this.videoElement.requestPictureInPicture) {
-      this.videoElement.requestPictureInPicture();
+    const aDoc = document as any;
+    const aVideo = this.videoElement as any;
+    if (aDoc.pictureInPictureElement) {
+      aDoc.exitPictureInPicture();
+    } else if (aVideo.requestPictureInPicture) {
+      aVideo.requestPictureInPicture();
     }
   }
 
