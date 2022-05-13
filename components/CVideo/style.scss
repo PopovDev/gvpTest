@@ -35,7 +35,7 @@
     > * {
       position: absolute;
       opacity: 0;
-      transition: opacity 0.5s;
+      transition: height 0.5s, margin-bottom 0.5s, opacity 0.5s;
       @include flexbox-layout;
     }
 
@@ -74,7 +74,6 @@
 
     > .bottom {
       z-index: 2;
-      transition: height 0.5s, margin-bottom 0.5s;
       bottom: 0;
       margin-bottom: -2%;
       width: 98%;
@@ -112,13 +111,25 @@
           > .prev_video {
             width: 40%;
             height: 100%;
-            background: #9d4848;
+            background: red;
+            cursor: pointer;
+            opacity: 0.4;
+            transition: opacity 0.5s;
+            &:hover {
+              opacity: 0.7;
+            }
           }
 
           > .next_video {
             width: 40%;
             height: 100%;
-            background: #9d4848;
+            background: red;
+            cursor: pointer;
+            opacity: 0.4;
+            transition: opacity 0.5s;
+            &:hover {
+              opacity: 0.7;
+            }
           }
         }
 
@@ -129,7 +140,7 @@
           transition: margin-bottom 0.5s;
           width: 15%;
           height: 70%;
-          margin-bottom: -2%;
+          margin-bottom: -7%;
           > .icon {
             position: absolute;
             opacity: 0;
@@ -139,11 +150,19 @@
             height: 100%;
             transition: height 0.5s, opacity 0.5s;
             background: #a20505;
+            &:hover {
+            }
+
+          }
+          &:hover {
+            &.settings {
+              width: 70%;
+            }
           }
 
           > .settings {
             opacity: 0;
-            width: 0;
+            width: 20%;
             transition: opacity 0.5s, width 0.5s;
             height: 100%;
             @include flexbox-layout;
@@ -177,7 +196,7 @@
 
             &:hover {
               background: #9d4848;
-              width: 100%;
+              width: 50%;
 
               > .menu {
                 justify-content: space-around;
@@ -194,12 +213,13 @@
             }
           }
 
+
           > .up_arrow {
             opacity: 1;
-            transition: opacity 0.5s;
+            transition: opacity 0.5s, height 0.5s;
             width: 30%;
-            margin-bottom: 13%;
-            height: 100%;
+            margin-bottom: 45%;
+            height: 90%;
             background: #ff0000;
           }
         }
@@ -221,7 +241,7 @@
             }
 
             > .icon {
-              opacity: 0;
+              opacity: 1;
             }
 
             > .up_arrow {
