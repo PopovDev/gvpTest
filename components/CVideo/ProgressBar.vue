@@ -55,7 +55,6 @@ export default class CVideo extends Vue {
     if (!el) return;
     const count = el.length;
     this.loadedArray = [];
-    console.log(this.totalTime);
     for (let i = 0; i < count; i++) {
       const start = el.start(i);
       const end = el.end(i);

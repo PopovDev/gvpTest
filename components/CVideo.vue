@@ -82,13 +82,13 @@
 </template>
 
 
-<style scoped lang="scss" src="./style.scss"></style>
+<style scoped lang="scss" src="CVideo/style.scss"></style>
 
 <script lang="ts">
 import {Action, Component, Getter, Vue, Watch} from 'nuxt-property-decorator';
 import {LoadableVideo} from "~/store/type";
 import ProgressBar from "~/components/CVideo/ProgressBar.vue";
-import Volume from "~/components/CVideo/Volume.vue";
+import Volume from "~/components/Volume.vue";
 
 @Component({components: {Volume, ProgressBar}, name: 'CVideo'})
 export default class CVideo extends Vue {

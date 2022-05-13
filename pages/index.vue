@@ -1,8 +1,10 @@
 <template>
   <div class="main">
-    <h4>{{ someData }}</h4>
-    <div class="videoC">
+    <div class="videoC" v-if="false">
       <CVideo></CVideo>
+    </div>
+    <div class="volumeContainer">
+      <Volume v-model="value" @change="valueChange"></Volume>
     </div>
   </div>
 </template>
@@ -17,16 +19,16 @@ export default Vue.extend({
   },
   data() {
     return {
-      someData: ""
+      value: 0,
     }
   },
   methods: {
-
+    valueChange(value: number) {
+      this.value = value;
+    }
   },
   async mounted() {
-
-
-
+    this.value = 15;
 
   }
 
@@ -34,6 +36,10 @@ export default Vue.extend({
 });
 </script>
 <style scoped lang="scss">
+.volumeContainer {
+  flex-basis: 30%;
+}
+
 .main {
   display: flex;
   flex-direction: row;
