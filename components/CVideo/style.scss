@@ -1,53 +1,3 @@
-<template>
-  <div class="video">
-    <div class="container">
-      <video ref="video"></video>
-    </div>
-    <div class="controls">
-      <div class="bottom">
-        <div class="_progress">
-
-        </div>
-        <div class="_retractable">
-          <div class="left">
-            <div class="prev_video">
-
-            </div>
-            <div class="next_video">
-
-            </div>
-          </div>
-          <div class="right">
-            <div class="icon">
-
-            </div>
-            <div class="settings">
-              <div class="menu">
-                <div class="graphics">
-
-                </div>
-                <div class="speed">
-
-                </div>
-              </div>
-            </div>
-
-            <div class="up_arrow">
-
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-
-</template>
-
-
-<style scoped lang="scss">
-
 @mixin flexbox-layout {
   display: flex;
   align-items: center;
@@ -56,16 +6,19 @@
 }
 
 .video {
-  background: #31a205;
   @include flexbox-layout;
+  background: #31a205;
   width: 100%;
-  position: relative;
   height: 100%;
+  position: relative;
 
-  > .container {
+  > * {
     @include flexbox-layout;
     width: 100%;
     height: 100%;
+  }
+
+  > .container {
     z-index: 0;
 
     > video {
@@ -76,91 +29,80 @@
 
   > .controls {
     z-index: 1;
-    @include flexbox-layout;
     position: absolute;
     overflow: hidden;
-    width: 100%;
-    height: 100%;
+
+    > * {
+      position: absolute;
+      opacity: 0;
+      transition: opacity 0.5s;
+      @include flexbox-layout;
+    }
 
     > .top {
-      position: absolute;
       z-index: 2;
-      @include flexbox-layout;
-      transition: opacity 0.5s;
       width: 100%;
       height: 10%;
       background: gray;
-      opacity: 0;
       top: 0;
+
       &:hover {
         opacity: .4;
       }
     }
 
     > .middle {
-      position: absolute;
       z-index: 3;
-      opacity: 0;
-      @include flexbox-layout;
-      transition: opacity 0.5s;
       width: 100%;
       height: 80%;
 
       > .play_btn {
+        cursor: pointer;
+        user-select: none;
         width: 5%;
         height: 10%;
         transition: opacity 0.5s;
         @include flexbox-layout;
-        background: rgba(255, 0, 0, 1);
+        background: red;
         opacity: 0.4;
+
         &:hover {
           opacity: 0.7;
         }
-      }
-
-
-    }
-    &:hover {
-      .middle {
-        opacity: 1;
-      }
-      .bottom {
-        opacity: 1;
-        margin-bottom: 0;
       }
     }
 
     > .bottom {
       z-index: 2;
-      opacity: 0;
-      position: absolute;
-      transition: height 0.5s, opacity 0.5s, margin-bottom 0.5s;
+      transition: height 0.5s, margin-bottom 0.5s;
       bottom: 0;
       margin-bottom: -2%;
-      width: 100%;
+      width: 98%;
       height: 5%;
-      @include flexbox-layout;
       justify-content: flex-start;
 
-      > ._progress {
+      > * {
         width: 100%;
+        @include flexbox-layout;
+      }
+
+      > .progress {
         flex-basis: 20%;
         background: #ff0000;
       }
 
-      > ._retractable {
-        width: 100%;
+      > .retractable {
         flex-basis: 80%;
-        @include flexbox-layout;
         flex-direction: row;
         justify-content: space-between;
         overflow: hidden;
-
+        > *{
+          @include flexbox-layout;
+        }
         > .left {
           opacity: 0;
           transition: opacity 0.5s, margin-bottom 0.5s;
           align-items: flex-start;
-          @include flexbox-layout;
           justify-content: space-between;
           flex-direction: row;
           width: 20%;
@@ -181,16 +123,13 @@
         }
 
         > .right {
-          align-items: flex-end;
-          @include flexbox-layout;
+          justify-content: flex-end!important;
           flex-direction: row;
           position: relative;
           transition: margin-bottom 0.5s;
           width: 15%;
           height: 70%;
-          justify-content: flex-end;
           margin-bottom: -2%;
-
           > .icon {
             position: absolute;
             opacity: 0;
@@ -203,33 +142,13 @@
           }
 
           > .settings {
-            transition: opacity 0.5s, width 0.5s;
             opacity: 0;
             width: 0;
+            transition: opacity 0.5s, width 0.5s;
             height: 100%;
             @include flexbox-layout;
             justify-content: space-around;
             background: #736d6d;
-
-
-
-            &:hover {
-              background: #9d4848;
-              width: 100%;
-
-              > .menu {
-                justify-content: space-around;
-                > .speed {
-                  width: 40%;
-                }
-
-                > .graphics {
-                  width: 40%;
-                }
-              }
-
-            }
-
 
             > .menu {
               width: 100%;
@@ -256,12 +175,28 @@
 
             }
 
+            &:hover {
+              background: #9d4848;
+              width: 100%;
 
+              > .menu {
+                justify-content: space-around;
+
+                > .speed {
+                  width: 40%;
+                }
+
+                > .graphics {
+                  width: 40%;
+                }
+              }
+
+            }
           }
 
           > .up_arrow {
-            transition: opacity 0.5s;
             opacity: 1;
+            transition: opacity 0.5s;
             width: 30%;
             margin-bottom: 13%;
             height: 100%;
@@ -272,8 +207,7 @@
 
       &:hover {
         height: 10%;
-
-        > ._retractable {
+        > .retractable {
           > .left {
             opacity: 1;
             margin-bottom: 0;
@@ -281,9 +215,11 @@
 
           > .right {
             margin-bottom: 0;
+
             > .settings {
               opacity: 1;
             }
+
             > .icon {
               opacity: 0;
             }
@@ -295,38 +231,16 @@
         }
       }
     }
+
+    &:hover {
+      .middle {
+        opacity: 1;
+      }
+
+      .bottom {
+        opacity: 1;
+        margin-bottom: 0;
+      }
+    }
   }
 }
-
-</style>
-
-<script lang="ts">
-import {Action, Component, Getter, State, Vue, Watch,} from 'nuxt-property-decorator';
-import {VideosState} from "~/store/type";
-import db from '~/plugins/firebase';
-import {collection, onSnapshot, Unsubscribe} from "firebase/firestore";
-
-@Component
-export default class CVideo extends Vue {
-  private videoElement: HTMLVideoElement | null = null;
-  @Getter("videos/list") private videos!: VideosState;
-  @Action("videos/fetchVideos") private fetchVideos!: Function;
-  private unsubscribe!: Unsubscribe;
-  public async fetch() {
-    await this.fetchVideos();
-  }
-  private mounted() {
-    this.videoElement = this.$refs.video as HTMLVideoElement;
-    const col = collection(db, "videos");
-    this.unsubscribe = onSnapshot(col, async (querySnapshot) => {
-      await this.fetchVideos();
-    });
-
-  }
-  private beforeDestroy() {
-    this.unsubscribe();
-  }
-
-}
-
-</script>
