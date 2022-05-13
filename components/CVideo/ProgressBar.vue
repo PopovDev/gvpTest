@@ -5,7 +5,11 @@
       ref="progress"
       @mousedown="onMouseDown"
     >
-      <div class="bar" :style="{'width': progress+'%'}"></div>
+      <div class="display">
+      <div class="bar" :style="{'width': progress+'%'}">
+      </div>
+      <div class="downloaded"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -70,13 +74,38 @@ export default class CVideo extends Vue {
   width: 100%
   height: 100%
 
+
   .progress
     width: 100%
     height: 100%
-    background: #ff0000
     cursor: pointer
+    display: flex
+    align-items: center
 
-    .bar
-      background: #3400ff
-      height: 100%
+    .display
+      width: 100%
+      height: 35%
+      top: 0
+      left: 0
+      background: #ff0000
+      overflow: hidden
+      position: relative
+
+
+      .bar
+        background: #3400ff
+        height: 100%
+        position: absolute
+        z-index: 6
+
+      .downloaded
+        background: #00ff00
+        position: absolute
+        height: 100%
+        width: 0
+        z-index: 5
+
+
+
+
 </style>

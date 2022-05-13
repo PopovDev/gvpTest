@@ -22,8 +22,12 @@
         </div>
       </div>
       <div class="bottom" :class="{open:progressChanging}">
-        <ProgressBar :progress="videoProgress" @holdChange="progressChangingEmitted" @progressChange="onProgressChange"
-                     class="progress"/>
+        <div class="progress_bar">
+          <ProgressBar :progress="videoProgress" @holdChange="progressChangingEmitted"
+                       @progressChange="onProgressChange"
+                       class="progress"/>
+
+        </div>
         <div class="retractable">
           <div class="left">
             <div class="prev_video"></div>
@@ -108,7 +112,7 @@ export default class CVideo extends Vue {
     if (video) {
       this.nowVideo = video;
       this.videoElement!.src = video.src;
-      this.videoElement!.poster =  video.poster;
+      this.videoElement!.poster = video.poster;
       this.videoElement!.load();
     }
   }
