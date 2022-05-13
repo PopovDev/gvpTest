@@ -47,6 +47,29 @@
       height: 10%;
       background: gray;
       top: 0;
+      @include flexbox-layout;
+      justify-content: space-between;
+      flex-direction: row;
+      > .screen{
+        order: 2;
+        width: 20%;
+        height: 100%;
+        @include flexbox-layout;
+        flex-direction: row;
+        justify-content: space-around;
+        > .full_screen{
+          width: 40%;
+          height: 70%;
+          background: #2b830b;
+        }
+        > .picture_in_picture{
+          width: 40%;
+          height: 70%;
+          background: #2b830b;
+        }
+
+      }
+
 
       &:hover {
         opacity: .4;
