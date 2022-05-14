@@ -4,7 +4,7 @@
       <CVideo></CVideo>
     </div>
 
-    <div class="volumeContainer">
+    <div class="volumeContainer" v-if="false">
       <Volume v-model="value" @change="valueChange"></Volume>
     </div>
   </div>

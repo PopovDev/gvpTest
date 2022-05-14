@@ -95,9 +95,7 @@ export default class CVideo extends Vue {
   private pageName: string = '';
 
   public head() {
-    return {
-      title: this.pageName,
-    };
+    return {title: this.pageName}
   }
 
   private videoElement: HTMLVideoElement | null = null;

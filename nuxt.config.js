@@ -1,4 +1,8 @@
 export default {
+  server: {
+    port: process.env.PORT||3000,
+    host: process.env.HOST|| 'localhost'
+  },
   head: {
     title: 'gvpTest',
     htmlAttrs: {lang: 'en'},
@@ -14,9 +18,10 @@ export default {
   },
   css: [],
   plugins: ["~/plugins/firebase.ts"],
+  serverMiddleware: [   { path: '/video', handler: '~/server-middleware/Video.ts' }],
   components: true,
   buildModules: ['@nuxt/typescript-build'],
-  modules: ['@nuxtjs/axios'],
+  modules: ['@nuxtjs/axios',  '@nuxtjs/dotenv'],
   axios: {baseURL: '/'},
   build: {}
 }
