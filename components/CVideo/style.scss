@@ -241,32 +241,32 @@
             background: #736d6d;
             margin-right: 30%;
 
-            > * {
-              transition: width 0.5s;
-            }
-
             > .menu {
               width: 100%;
               height: 100%;
+              transition: width 0.5s;
               @include flexbox-layout;
               flex-direction: row;
               justify-content: space-around;
+              > *{
+                width: 40%;
+                @include flexbox-layout;
+                transition: height 0.5s, transform 0.5s, opacity 0.5s;
+                height: 100%;
+                justify-content: flex-start;
+              }
 
               > .graphics {
-                width: 40%;
                 order: 2;
-                @include flexbox-layout;
-                transition: height 0.5s, transform 0.5s;
-                height: 100%;
                 background: #31a205;
-                justify-content: flex-start;
 
                 > .graphic {
-                  width: 30%;
+                  width: 0;
                   height: 0;
                   position: absolute;
+                  opacity: 0;
                   z-index: 5;
-                  transition: width 0.5s, height 0.5s;
+                  transition: width 0.5s, height 0.5s, opacity 0.5s;
                   transform: translate(0, -100%);
                   background: #8005a2;
                   @include flexbox-layout;
@@ -293,35 +293,29 @@
                   > .hd {
 
                   }
-
-                  &:hover {
-                    width: 60%;
-                  }
                 }
 
                 &:hover {
                   .graphic {
                     height: 10vh;
+                    opacity: 1;
+                    width: 30%;
                   }
                 }
               }
 
               > .speed {
-                width: 40%;
                 order: 1;
-                @include flexbox-layout;
-                transition: height 0.5s;
-                height: 100%;
                 background: #31a205;
-                justify-content: flex-start;
 
                 > .speeds {
-                  width: 30%;
+                  width: 0;
                   height: 0;
                   position: absolute;
                   transform: translate(0, -100%);
                   z-index: 5;
-                  transition: width 0.5s, height 0.5s;
+                  opacity: 0;
+                  transition: width 0.5s, height 0.5s, opacity 0.5s;
                   background: #8005a2;
                   @include flexbox-layout;
                   justify-content: space-around;
@@ -350,7 +344,8 @@
                 &:hover {
                   .speeds {
                     height: 10vh;
-                    transform: translate(0, -100%);
+                    opacity: 1;
+                    width: 30%;
                   }
                 }
 
@@ -374,7 +369,6 @@
             height: 90%;
             background: #ff0000;
           }
-
 
         }
       }
@@ -420,10 +414,7 @@
         opacity: 1;
       }
 
-      .top {
-        opacity: 0.4;
-      }
-      .volumeContainer {
+      .top, .volumeContainer {
         opacity: 0.4;
       }
       .bottom {
@@ -431,7 +422,6 @@
         margin-bottom: 0;
 
         .retractable {
-
           transform: translate(0, 100%);
           > .right{
             > .up_arrow{
