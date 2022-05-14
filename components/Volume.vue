@@ -3,12 +3,12 @@
     <div class="circle" :style="{'--volume-percent': value+'%'}">
       <div class="progress"></div>
       <div class="overlay"><span class="text">{{ value }}</span></div>
-      <div class="icon"></div>
+      <div class="icon"> nigger</div>
     </div>
   </div>
 </template>
 <script lang="ts">
-import {Component, Vue, Prop, Emit, Watch} from 'nuxt-property-decorator';
+import {Component, Vue, Prop, Emit} from 'nuxt-property-decorator';
 
 @Component({name: 'Volume'})
 export default class Volume extends Vue {
@@ -58,24 +58,51 @@ export default class Volume extends Vue {
     }
     @include flex-center;
     position: relative;
-    > .progress {
-      background: conic-gradient(rgb(3, 133, 255) var(--volume-percent), rgb(242, 242, 242) var(--volume-percent));
+    > *{
+      transition: opacity .5s;
     }
     > .overlay {
       position: absolute;
       width: 70% !important;
       height: 70% !important;
-      background: #31a205;
       @include circle;
       > .text {
         font-size: 1.5rem;
+        opacity: 0;
         @include flex-center;
       }
+      &:before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        padding: 10px;
+        background: conic-gradient(rgb(3, 133, 255) var(--volume-percent), rgb(242, 242, 242) var(--volume-percent));
+        mask: linear-gradient(#fff, #fff, #fff, #fff, #fff, #fff) content-box, linear-gradient(#fff, #fff, #fff, #fff, #fff, #fff);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+      }
     }
-    > .icon{
-      @include circle;
-      width: 100%;
-      height: 100%;
+    > .icon {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 2;
+      color: #fff;
+      @include flex-center;
+    }
+    &:hover {
+      > .overlay {
+        > .text {
+          opacity: 1;
+        }
+      }
+      > .icon {
+        opacity: 0;
+      }
     }
   }
 }
