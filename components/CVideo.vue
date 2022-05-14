@@ -86,7 +86,6 @@
 
 <script lang="ts">
 import {Action, Component, Getter, Vue, Watch} from 'nuxt-property-decorator';
-import {LoadableVideo} from "~/store/type";
 import ProgressBar from "~/components/CVideo/ProgressBar.vue";
 import Volume from "~/components/Volume.vue";
 

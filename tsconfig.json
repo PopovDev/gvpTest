@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2018",
+    "target": "ES2016",
     "module": "ESNext",
     "moduleResolution": "Node",
     "lib": [
@@ -30,6 +30,9 @@
       "@types/node",
       "@types/firebase",
       "@types/hls.js",
+    ],
+    "typeRoots": [
+      "./types.d.ts"
     ]
   },
   "exclude": [

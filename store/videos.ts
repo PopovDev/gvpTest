@@ -1,6 +1,5 @@
 import db from "~/plugins/firebase";
 import {collection,getDocs} from "firebase/firestore";
-import {LoadableVideo, VideosState} from "~/store/type";
 export const state = ():VideosState => ({
   list: [],
 })

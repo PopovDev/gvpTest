@@ -2,17 +2,30 @@ import express from 'express';
 import path from "path";
 import * as process from "process";
 
+import videosMap from "./Libs/syncVideoConnection";
+import videoFilesMap from "./Libs/syncVideoFilesConnection";
+
+
 const app = express();
 
+const mainDir = path.join(__dirname, '../');
 const videoPath: string = process.env.VIDEO_PATH || 'videos';
-const videosDir = path.join(__dirname, '../', videoPath);
+const videosDir = path.join(mainDir, videoPath);
 
-console.log(videosDir);
-app.get('/:id', (req, res) => {
-  console.log(req.headers);
-  res.setHeader('Content-Type', 'video/mp4');
-  res.sendFile(path.join(videosDir, '1', 'video.mp4'));
-  console.log('end');
+
+app.get('/?:id', (req, res) => {
+  const id = req.params.id;
+  if (!id) {
+    res.status(400).send('No id provided');
+    return;
+  }
+  if(!videosMap.has(id)) {
+    res.status(404).send('Video not found');
+    return;
+  }
+  const video = videosMap.get(id);
+  res.send(video);
+
 });
 
 module.exports = app;
