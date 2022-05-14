@@ -2,7 +2,10 @@
   <div class="app">
     <div class="header">
       <div>
-        <h1>むだ</h1>
+        <NuxtLink to="/">
+          <h1>むだ</h1>
+        </NuxtLink>
+
       </div>
     </div>
     <div class="body">

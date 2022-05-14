@@ -15,16 +15,27 @@ const videosDir = path.join(mainDir, videoPath);
 
 app.get('/?:id', (req, res) => {
   const id = req.params.id;
+  const isPoster = req.query.poster;
   if (!id) {
     res.status(400).send('No id provided');
     return;
   }
-  if(!videosMap.has(id)) {
+  const videos = [...videosMap.values()];
+  if (!videos.find(video => video.file === id)) {
     res.status(404).send('Video not found');
     return;
   }
-  const video = videosMap.get(id);
-  res.send(video);
+  if (!videoFilesMap.has(id)) {
+    res.status(404).send('Video not found');
+    return;
+  }
+  const filesDir = path.join(videosDir, id);
+  const file = videoFilesMap.get(id)!;
+  if (isPoster) {
+    res.sendFile(path.join(filesDir, file.poster));
+  } else {
+    res.sendFile(path.join(filesDir, file.video));
+  }
 
 });
 

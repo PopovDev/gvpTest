@@ -3,7 +3,7 @@ declare global {
   interface IVideo {
     title: string;
     description: string;
-    file:  FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>;
+    file:  string;
     createdAt: Date;
     updatedAt: Date;
   }
@@ -13,15 +13,8 @@ declare global {
       poster: string;
   }
 
-
-  interface LoadableVideo {
-    src: string;
-    poster: string;
-    name: string;
-  }
-
   interface VideosState {
-    list: LoadableVideo[];
+    list: IVideo[];
   }
 
 }

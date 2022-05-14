@@ -85,7 +85,7 @@
 <style scoped lang="scss" src="./CVideo/style.scss"></style>
 
 <script lang="ts">
-import {Action, Component, Getter, Vue, Watch} from 'nuxt-property-decorator';
+import {Action, Component, Getter, Prop, Vue, Watch} from 'nuxt-property-decorator';
 import ProgressBar from "~/components/CVideo/ProgressBar.vue";
 import Volume from "~/components/Volume.vue";
 
@@ -97,36 +97,24 @@ export default class CVideo extends Vue {
     return {title: this.pageName}
   }
 
+  @Prop({required: true, type: Object})
+  public video!: IVideo;
+
   private videoElement: HTMLVideoElement | null = null;
-  @Getter("videos/list") private videos!: LoadableVideo[];
-  @Action("videos/fetchVideos") private fetchVideos!: Function;
   private paused: boolean = true;
-  private nowVideo: LoadableVideo | null = null;
   private progressChanging: boolean = false;
   private totalTime: number = 0;
   private videoProgress: number = 0;
   private loadedFrags: TimeRanges | null = null;
 
-  public async fetch() {
-    await this.fetchVideos();
-  }
-
-
   private onProgressChange(progress: number) {
     if (!this.videoElement) return;
     this.videoProgress = progress;
     this.videoElement.currentTime = progress / 100 * this.videoElement.duration;
-
   }
 
-  private setNowVideo(video: LoadableVideo | null) {
-    if (!this.videoElement) return;
-    if (!video) return;
-    this.nowVideo = video;
-    this.videoElement.src = video.src;
-    this.videoElement.poster = video.poster;
-    this.videoElement.load();
-    this.pageName = video.name;
+  private progressChangingEmitted(e: boolean) {
+    this.progressChanging = e;
   }
 
   @Watch("paused")
@@ -135,10 +123,6 @@ export default class CVideo extends Vue {
       this.videoElement!.pause();
     else
       this.videoElement!.play();
-  }
-
-  private progressChangingEmitted(e: boolean) {
-    this.progressChanging = e;
   }
 
   private timeUpdate() {
@@ -170,18 +154,29 @@ export default class CVideo extends Vue {
     }
   }
 
+  public playClick() {
+    this.paused = !this.paused;
+  }
+
+
+  private loadVideo() {
+    if (!this.videoElement) return;
+    const url = `/video/${this.video.file}`;
+    this.videoElement.src = url
+    this.videoElement.poster = `${url}?poster=1`;
+    this.videoElement.load();
+    this.pageName = this.video.title;
+  }
+
   private mounted() {
     this.videoElement = this.$refs.video as HTMLVideoElement;
     this.videoElement.ontimeupdate = this.timeUpdate;
     this.videoElement.onpause = () => this.paused = true;
     this.videoElement.onplay = () => this.paused = false;
-    this.setNowVideo(this.videos[0]);
-    console.log("mounted");
+
+    this.loadVideo();
   }
 
-  public playClick() {
-    this.paused = !this.paused;
-  }
 
 }
 
