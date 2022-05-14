@@ -82,7 +82,7 @@
 </template>
 
 
-<style scoped lang="scss" src="./style.scss"></style>
+<style scoped lang="scss" src="CVideo/style.scss"></style>
 
 <script lang="ts">
 import {Action, Component, Getter, Vue, Watch} from 'nuxt-property-decorator';
