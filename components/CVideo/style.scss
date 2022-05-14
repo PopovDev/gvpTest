@@ -98,8 +98,8 @@
       aspect-ratio: 1;
       position: absolute;
       z-index: 4;
-      top: 0;
-      left: 0;
+      top: 1%;
+      left: 1%;
       &:hover {
         opacity: 1 !important;
       }
@@ -239,6 +239,7 @@
             height: 100%;
             @include flexbox-layout;
             background: #736d6d;
+            margin-right: 30%;
 
             > * {
               transition: width 0.5s;
@@ -255,41 +256,41 @@
                 width: 40%;
                 order: 2;
                 @include flexbox-layout;
-                transition: width 0.5s;
+                transition: height 0.5s, transform 0.5s;
                 height: 100%;
                 background: #31a205;
+                justify-content: flex-start;
 
                 > .graphic {
                   width: 30%;
                   height: 0;
                   position: absolute;
                   z-index: 5;
-                  transition: width 0.5s;
+                  transition: width 0.5s, height 0.5s;
+                  transform: translate(0, -100%);
                   background: #8005a2;
                   @include flexbox-layout;
                   justify-content: space-around;
 
                   > * {
-                    transition: width 0.5s;
+                    width: 100%;
+                    height: 30%;
+                    background: #a20505;
+                    cursor: pointer;
+                    transition: background-color 0.5s;
+                    &:hover {
+                      background: #d50707;
+                    }
                   }
 
                   > .low {
-                    width: 30%;
-                    height: 100%;
-                    background: #a20505;
 
                   }
 
                   > .lowHd {
-                    width: 30%;
-                    height: 100%;
-                    background: #a20505;
                   }
 
                   > .hd {
-                    width: 30%;
-                    height: 100%;
-                    background: #a20505;
 
                   }
 
@@ -301,7 +302,6 @@
                 &:hover {
                   .graphic {
                     height: 10vh;
-                    transform: translate(0, -60%);
                   }
                 }
               }
@@ -310,48 +310,52 @@
                 width: 40%;
                 order: 1;
                 @include flexbox-layout;
-                transition: width 0.5s;
+                transition: height 0.5s;
                 height: 100%;
-                background: #263f1d;
+                background: #31a205;
+                justify-content: flex-start;
 
                 > .speeds {
-                  @include flexbox-layout;
-                  flex-direction: row;
-                  position: absolute;
-                  z-index: 4;
+                  width: 30%;
                   height: 0;
-                  width: 100%;
+                  position: absolute;
+                  transform: translate(0, -100%);
+                  z-index: 5;
+                  transition: width 0.5s, height 0.5s;
+                  background: #8005a2;
+                  @include flexbox-layout;
+                  justify-content: space-around;
+                  > * {
+                    width: 100%;
+                    height: 30%;
+                    background: #a20505;
+                    cursor: pointer;
+                    transition: background-color 0.5s;
+                    &:hover {
+                      background: #d50707;
+                    }
+                  }
 
                   > .slow {
-                    width: 30%;
-                    height: 100%;
-                    background: #a20505;
                   }
 
                   > .normal {
-                    width: 30%;
-                    height: 100%;
-                    background: #a20505;
                   }
 
                   > .fast {
-                    width: 30%;
-                    height: 100%;
-                    background: #a20505;
                   }
 
-                  &:hover {
-                    width: 60%;
-                  }
                 }
 
                 &:hover {
                   .speeds {
-                    height: 60%;
+                    height: 10vh;
+                    transform: translate(0, -100%);
                   }
                 }
 
               }
+
 
 
             }
@@ -394,7 +398,7 @@
             }
 
             > .up_arrow {
-              transform: translate(0, -250%)!important;
+              transform: translate(0, -500%)!important;
               opacity: 0;
               height: 0;
             }

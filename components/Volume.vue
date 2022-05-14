@@ -3,6 +3,7 @@
     <div class="circle" :style="{'--volume-percent': value+'%'}">
       <div class="progress"></div>
       <div class="overlay"><span class="text">{{ value }}</span></div>
+      <div class="icon"></div>
     </div>
   </div>
 </template>
@@ -50,7 +51,6 @@ export default class Volume extends Vue {
   @mixin circle {
     border-radius: 50%;
   }
-  background: #b7f9a7;
   user-select: none;
   > .circle {
     &, > .progress {
@@ -71,6 +71,11 @@ export default class Volume extends Vue {
         font-size: 1.5rem;
         @include flex-center;
       }
+    }
+    > .icon{
+      @include circle;
+      width: 100%;
+      height: 100%;
     }
   }
 }

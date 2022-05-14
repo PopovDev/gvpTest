@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="volumeContainer">
-        <Volume :value="1"></Volume>
+        <Volume :value="25"></Volume>
       </div>
       <div class="middle" @click="playClick">
         <div class="play_btn">
@@ -82,7 +82,7 @@
 </template>
 
 
-<style scoped lang="scss" src="CVideo/style.scss"></style>
+<style scoped lang="scss" src="./CVideo/style.scss"></style>
 
 <script lang="ts">
 import {Action, Component, Getter, Vue, Watch} from 'nuxt-property-decorator';
