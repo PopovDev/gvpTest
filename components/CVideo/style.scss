@@ -85,29 +85,26 @@
       }
 
 
-
-
-      &:hover{
-        opacity: 0.7!important;
+      &:hover {
+        opacity: 0.7 !important;
       }
 
 
     }
 
-    > .volume {
-      position: absolute;
-      z-index: 5;
+
+    > .volumeContainer {
+      height: 30%;
       aspect-ratio: 1;
-      width: 20%;
-      background: #a20505;
+      position: absolute;
+      z-index: 4;
       top: 0;
-      opacity: 1;
       left: 0;
-
-      &:hover{
-        opacity: 0.7!important;
+      &:hover {
+        opacity: 1 !important;
       }
     }
+
 
     > .middle {
       z-index: 3;
@@ -141,6 +138,7 @@
       > * {
         width: 100%;
         @include flexbox-layout;
+        transition: transform 0.5s;
       }
 
       > .progress_bar {
@@ -148,9 +146,11 @@
         position: relative;
         flex-basis: 30%;
         @include flexbox-layout;
-        > *{
+
+        > * {
           position: absolute;
         }
+
         > .progress_bar {
           bottom: 0;
           height: 100%;
@@ -162,10 +162,10 @@
 
       > .retractable {
         flex-basis: 70%;
-        z-index: 4;
+        z-index: 5;
         flex-direction: row;
         justify-content: space-between;
-        overflow: hidden;
+
 
         > * {
           @include flexbox-layout;
@@ -179,7 +179,6 @@
           flex-direction: row;
           width: 20%;
           height: 70%;
-          margin-bottom: -7%;
 
           > .prev_video {
             width: 40%;
@@ -215,7 +214,6 @@
           transition: margin-bottom 0.5s;
           width: 15%;
           height: 70%;
-          margin-bottom: -7%;
 
           > .icon {
             position: absolute;
@@ -366,9 +364,9 @@
 
           > .up_arrow {
             opacity: 1;
-            transition: opacity 0.5s, height 0.5s;
+            position: absolute;
+            transition: opacity 0.5s, height 0.5s, transform 0.5s;
             width: 30%;
-            margin-bottom: 45%;
             height: 90%;
             background: #ff0000;
           }
@@ -380,14 +378,13 @@
       @mixin openState {
         height: 15%;
         > .retractable {
+          transform: translate(0,0 )!important;
+
           > .left {
             opacity: 1;
-            margin-bottom: 0;
           }
 
           > .right {
-            margin-bottom: 0;
-
             > .settings {
               opacity: 1;
             }
@@ -397,6 +394,7 @@
             }
 
             > .up_arrow {
+              transform: translate(0, -250%)!important;
               opacity: 0;
               height: 0;
             }
@@ -421,12 +419,23 @@
       .top {
         opacity: 0.4;
       }
-      .volume{
+      .volumeContainer {
         opacity: 0.4;
       }
       .bottom {
         opacity: 1;
         margin-bottom: 0;
+
+        .retractable {
+
+          transform: translate(0, 100%);
+          > .right{
+            > .up_arrow{
+              transform: translate(0, -150%);
+            }
+          }
+
+        }
       }
     }
 

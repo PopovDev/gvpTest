@@ -7,6 +7,7 @@
     </div>
     <div class="body">
 
+
       <nuxt/>
     </div>
   </div>

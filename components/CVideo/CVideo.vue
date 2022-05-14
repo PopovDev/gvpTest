@@ -12,8 +12,8 @@
           </div>
         </div>
       </div>
-      <div class="volume">
-        <Volume/>
+      <div class="volumeContainer">
+        <Volume :value="1"></Volume>
       </div>
       <div class="middle" @click="playClick">
         <div class="play_btn">

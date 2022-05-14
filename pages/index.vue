@@ -1,8 +1,9 @@
 <template>
   <div class="main">
-    <div class="videoC" v-if="false">
+    <div class="videoC" v-if="true">
       <CVideo></CVideo>
     </div>
+
     <div class="volumeContainer">
       <Volume v-model="value" @change="valueChange"></Volume>
     </div>
