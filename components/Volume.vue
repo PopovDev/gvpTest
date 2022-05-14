@@ -31,6 +31,7 @@ export default class Volume extends Vue {
     const circleHeight = circle.offsetHeight;
     const y = e.clientY - circle.offsetTop;
     const percent = Math.round((y / circleHeight) * 1000)/10;
+    //from 0 to 100 clamp
     this.onChange(100-Math.max(0, Math.min(percent, 100)));
   }
 }
