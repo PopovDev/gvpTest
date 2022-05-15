@@ -22,8 +22,8 @@
       </div>
       <div class="middle" @click="playClick">
         <div class="play_btn">
-          <img src="./CVideo/IMG_4925.PNG" alt="">
-          {{ !paused ? 'Pause' : 'Play' }}
+          <img v-if="!paused" src="/icons/pause.PNG" alt="">
+          <img v-else src="/icons/play.PNG" alt="">
         </div>
       </div>
       <div class="bottom" :class="{open:progressChanging}">
@@ -91,7 +91,7 @@
 <style scoped lang="scss" src="./CVideo/style.scss"></style>
 
 <script lang="ts">
-import {Action, Component, Getter, Prop, Vue, Watch} from 'nuxt-property-decorator';
+import {Component, Prop, Vue, Watch} from 'nuxt-property-decorator';
 import ProgressBar from "~/components/CVideo/ProgressBar.vue";
 import Volume from "~/components/Volume.vue";
 
@@ -168,16 +168,39 @@ export default class CVideo extends Vue {
     this.posterSrc = `${url}?poster=1`;
     this.videoElement.load();
   }
-  private mounted() {
+
+  private keyDown(e: KeyboardEvent) {
+    switch (e.code) {
+      case "Space":
+        this.playClick();
+        break;
+      case "ArrowLeft":
+        this.onProgressChange(this.videoProgress - 5);
+        break;
+      case "ArrowRight":
+        this.onProgressChange(this.videoProgress + 5);
+        break;
+      case "KeyF":
+        this.fullScreenClick();
+        break;
+      case "KeyP":
+        this.picInPicClick();
+        break;
+    }
+
+  }
+
+  public mounted() {
     this.videoElement = this.$refs.video as HTMLVideoElement;
     this.videoElement.ontimeupdate = this.timeUpdate;
     this.videoElement.onpause = () => this.paused = true;
     this.videoElement.onplay = () => this.paused = false;
-
+    document.addEventListener("keydown", this.keyDown);
     this.loadVideo();
-
   }
-
+  public beforeDestroy() {
+    document.removeEventListener("keydown", this.keyDown);
+  }
 
 }
 
