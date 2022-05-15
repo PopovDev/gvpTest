@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div class="videoC">
-      <CVideo :video="video" v-if="video"></CVideo>
+      <CVideo v-if="video"></CVideo>
     </div>
   </div>
 </template>
@@ -10,28 +10,29 @@ import {Action, Component, Getter, Vue,} from 'nuxt-property-decorator';
 
 @Component({name: 'Index'})
 export default class Index extends Vue {
-  private video: IVideo | null = null;
-  @Getter("videos/list")
-  private videos!: IVideo[];
-  @Action("videos/fetchVideos")
-  private fetchVideos!: Function;
+  @Getter("video/showingVideo")
+  private video!: IVideo | null;
+  @Action("video/loadVideo")
+  private loadVideo!: Function;
+  @Action("video/setShowingVideo")
+  private setShowingVideo!: Function;
 
   public head() {
     return {title: "Video Player"}
   }
 
+  async validate({params, store}: any) {
+    return await store.dispatch("video/videoExists", params.id)
+  }
+
   async fetch() {
-    await this.fetchVideos();
-    this.video = this.videos[Number(this.$route.params!.id)|0];
-
-    console.log(this.video);
+    const id = this.$route.params.id;
+    await this.loadVideo(id);
   }
-
-  private mounted() {
-
-
+  async mounted() {
+    const id = this.$route.params.id;
+    await this.setShowingVideo(id);
   }
-
 }
 
 

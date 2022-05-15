@@ -12,7 +12,6 @@ const mainDir = path.join(__dirname, '../');
 const videoPath: string = process.env.VIDEO_PATH || 'videos';
 const videosDir = path.join(mainDir, videoPath);
 
-
 app.get('/?:id', (req, res) => {
   const id = req.params.id;
   const isPoster = req.query.poster;

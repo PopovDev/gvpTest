@@ -4,10 +4,10 @@
     <h1>Links:</h1>
     <div class="links">
       <div class="link">
-        <NuxtLink to="player/0">First video</NuxtLink>
+        <NuxtLink to="player/avxki167npf805ae9uih1h">First video</NuxtLink>
       </div>
       <div class="link">
-        <NuxtLink to="player/1">Second video</NuxtLink>
+        <NuxtLink to="player/gfldjtfyzxqet9qixfzizt">Second video</NuxtLink>
       </div>
     </div>
 

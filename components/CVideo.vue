@@ -98,8 +98,8 @@ export default class CVideo extends Vue {
     return {title: this.pageName}
   }
 
-  @Prop({required: true, type: Object})
-  public video!: IVideo;
+  @Getter("video/showingVideo")
+  private video!: IVideo;
 
   private videoElement: HTMLVideoElement | null = null;
   private paused: boolean = true;
@@ -170,6 +170,7 @@ export default class CVideo extends Vue {
   }
 
   private mounted() {
+    console.log(this.video)
     this.videoElement = this.$refs.video as HTMLVideoElement;
     this.videoElement.ontimeupdate = this.timeUpdate;
     this.videoElement.onpause = () => this.paused = true;

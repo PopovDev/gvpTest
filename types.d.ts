@@ -1,6 +1,7 @@
 export {}
 declare global {
   interface IVideo {
+    id: string;
     title: string;
     description: string;
     file:  string;
@@ -16,5 +17,8 @@ declare global {
   interface VideosState {
     list: IVideo[];
   }
-
+  interface VideoState {
+    loadedVideos: IVideo[];
+    showingVideo: IVideo|null;
+  }
 }
