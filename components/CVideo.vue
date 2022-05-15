@@ -43,6 +43,7 @@
           </div>
           <div class="right">
             <div class="icon"></div>
+            <div class="pseudo_icon"></div>
             <div class="settings">
               <div class="menu">
                 <div class="graphics">
@@ -74,10 +75,10 @@
               </div>
             </div>
 
-            <div class="up_arrow">
 
-            </div>
           </div>
+        </div>
+        <div class="up_arrow">
         </div>
       </div>
 

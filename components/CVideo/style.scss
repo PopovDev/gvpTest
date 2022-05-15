@@ -27,7 +27,7 @@
 
     > .poster {
       position: absolute;
-      max-width: 100%;
+      width: 100%;
       max-height: 100%;
 
       display: flex;
@@ -35,6 +35,7 @@
       justify-content: center;
       align-items: center;
       aspect-ratio: 16/9;
+
 
       > img {
         width:99%;
@@ -67,8 +68,8 @@
       z-index: 2;
       width: 100%;
       height: 10%;
-      top: 1%;
-      right: 1%;
+      top: 0;
+      right: 0;
       justify-content: flex-end;
       flex-direction: row;
 
@@ -78,6 +79,8 @@
         aspect-ratio: 2/1;
         @include flexbox-layout;
         flex-direction: row;
+        top: 1%;
+        right: 1%;
         justify-content: space-around;
 
         > * {
@@ -119,6 +122,7 @@
     > .volumeContainer {
       height: 30%;
       aspect-ratio: 1;
+      max-width: 40%;
       position: absolute;
       z-index: 4;
       top: 1%;
@@ -206,9 +210,9 @@
           align-items: center;
           justify-content: space-between;
           flex-direction: row;
-          width: 30%;
-          aspect-ratio: 2/1;
-          max-height: 100%;
+          height: 80%;
+          aspect-ratio: 4/1;
+          max-width: 50%;
 
           > .prev_video {
             width: 40%;
@@ -244,9 +248,9 @@
           flex-direction: row;
           position: relative;
           transition: margin-bottom 0.5s;
-          width: 20%;
-          aspect-ratio: 2/1;
-          max-height: 100%;
+          height: 80%;
+          max-width: 35%;
+          aspect-ratio: 3/1;
 
           > .icon {
             position: absolute;
@@ -256,24 +260,39 @@
             height: 80%;
             aspect-ratio: 1;
             max-height: 80%;
+            max-width: 80%;
             transition: height 0.5s, opacity 0.5s;
             background: #a20505;
 
             &:hover {
               ~ .settings {
-                width: 70%;
+                width: 100%;
               }
             }
+          }
+          > .pseudo_icon{
+            opacity: 0;
+            order: 2;
+            align-items: flex-end;
+            height: 80%;
+            aspect-ratio: 1;
+            max-height: 80%;
+            max-width: 80%;
+            transition: height 0.5s, opacity 0.5s;
+            background: #a20505;
+
           }
 
           > .settings {
             opacity: 0;
             width: 0;
             transition: opacity 0.5s, width 0.5s;
-            aspect-ratio: 1;
+            aspect-ratio: 2/1;
             @include flexbox-layout;
             background: #736d6d;
-            margin-right: 30%;
+            max-height: 80%;
+            max-width: 80%;
+            justify-content: left;
 
             > .menu {
               width: 100%;
@@ -297,12 +316,12 @@
 
                 > .graphic {
                   width: 0;
-                  height: 0;
                   position: absolute;
                   opacity: 0;
                   z-index: 5;
                   transition: width 0.5s, height 0.5s, opacity 0.5s;
                   transform: translate(0, -100%);
+                  aspect-ratio: 1/2;
                   background: #8005a2;
                   @include flexbox-layout;
                   justify-content: space-around;
@@ -333,7 +352,6 @@
 
                 &:hover {
                   .graphic {
-                    height: 10vh;
                     opacity: 1;
                     width: 30%;
                   }
@@ -346,9 +364,9 @@
 
                 > .speeds {
                   width: 0;
-                  height: 0;
                   position: absolute;
                   transform: translate(0, -100%);
+                  aspect-ratio: 1/2;
                   z-index: 5;
                   opacity: 0;
                   transition: width 0.5s, height 0.5s, opacity 0.5s;
@@ -381,7 +399,6 @@
 
                 &:hover {
                   .speeds {
-                    height: 10vh;
                     opacity: 1;
                     width: 30%;
                   }
@@ -393,25 +410,22 @@
             }
 
             &:hover {
-              width: 85%;
+              width: 100%;
             }
           }
 
 
-          > .up_arrow {
-            opacity: 1;
-            position: absolute;
-            transition: opacity 0.5s, height 0.5s, transform 0.5s;
-            width: 30%;
-            aspect-ratio: 2/1;
-            background: #ff0000;
-          }
+
 
         }
       }
 
       @mixin openState {
         height: 15%;
+        > .up_arrow {
+          transform: translate(0, -200%);
+          opacity: 0;
+        }
         > .retractable {
           transform: translate(0, 0) !important;
 
@@ -428,13 +442,20 @@
               opacity: 1;
             }
 
-            > .up_arrow {
-              transform: translate(0, -500%) !important;
-              opacity: 0;
-              height: 0;
-            }
+
           }
         }
+      }
+
+      > .up_arrow {
+          opacity: 1;
+          position: absolute;
+          transition: opacity 0.5s, height 0.5s, transform 0.5s;
+          width: 5%;
+          aspect-ratio: 2/1;
+          background: #ff0000;
+        bottom: 10%;
+        right: 1%;
       }
 
       &:hover {
@@ -460,12 +481,6 @@
 
         .retractable {
           transform: translate(0, 100%);
-
-          > .right {
-            > .up_arrow {
-              transform: translate(0, -150%);
-            }
-          }
 
         }
       }
