@@ -17,6 +17,7 @@
       </div>
       <div class="middle" @click="playClick">
         <div class="play_btn">
+          <img src="./CVideo/IMG_4925.PNG" alt="">
           {{ !paused ? 'Pause' : 'Play' }}
         </div>
       </div>

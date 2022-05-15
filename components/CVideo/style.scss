@@ -48,13 +48,14 @@
       z-index: 2;
       width: 100%;
       height: 10%;
-      top: 0;
+      top: 1%;
+      right: 1%;
       justify-content: flex-end;
       flex-direction: row;
 
       > .screen {
         order: 2;
-        width: 20%;
+        width: 10%;
         height: 100%;
         @include flexbox-layout;
         flex-direction: row;
@@ -66,11 +67,13 @@
 
         @mixin flBtn {
           width: 40%;
-          height: 70%;
+          aspect-ratio: 1/1;
+          max-height: 100%;
           background: #2b830b;
           cursor: pointer;
           &:hover {
             background: #0003ff;
+            opacity: 1!important;
           }
         }
 
@@ -115,13 +118,15 @@
       > .play_btn {
         cursor: pointer;
         user-select: none;
-        width: 5%;
-        aspect-ratio: 1;
+        width: 7%;
+        aspect-ratio: 16/9;
         transition: opacity 0.5s;
         @include flexbox-layout;
-        background: red;
         opacity: 0.4;
-
+        > img{
+          width: 100%;
+          height: 100%;
+        }
         &:hover {
           opacity: 0.7;
         }
@@ -146,6 +151,7 @@
         width: 100%;
         position: relative;
         flex-basis: 30%;
+        aspect-ratio: 16/9;
         @include flexbox-layout;
 
         > * {
@@ -163,6 +169,8 @@
 
       > .retractable {
         flex-basis: 70%;
+        aspect-ratio: auto;
+        max-height: 70%;
         z-index: 5;
         flex-direction: row;
         justify-content: space-between;
@@ -175,7 +183,7 @@
         > .left {
           opacity: 0;
           transition: opacity 0.5s, margin-bottom 0.5s;
-          align-items: flex-start;
+          align-items: center;
           justify-content: space-between;
           flex-direction: row;
           width: 20%;
@@ -183,7 +191,8 @@
 
           > .prev_video {
             width: 40%;
-            height: 100%;
+            aspect-ratio: 16/9;
+            max-height: 100%;
             background: red;
             cursor: pointer;
             opacity: 0.4;
@@ -196,7 +205,8 @@
 
           > .next_video {
             width: 40%;
-            height: 100%;
+            aspect-ratio: 16/9;
+            max-height: 100%;
             background: red;
             cursor: pointer;
             opacity: 0.4;
@@ -221,8 +231,8 @@
             opacity: 0;
             align-items: flex-end;
             z-index: 3;
-            width: 30%;
-            height: 100%;
+            height: 80%;
+            aspect-ratio: 1;
             transition: height 0.5s, opacity 0.5s;
             background: #a20505;
 
@@ -237,7 +247,7 @@
             opacity: 0;
             width: 0;
             transition: opacity 0.5s, width 0.5s;
-            height: 100%;
+            aspect-ratio: 1;
             @include flexbox-layout;
             background: #736d6d;
             margin-right: 30%;

@@ -3,7 +3,7 @@
     <div class="circle" :style="{'--volume-percent': value+'%'}">
       <div class="progress"></div>
       <div class="overlay"><span class="text">{{ value }}</span></div>
-      <div class="icon"> nigger</div>
+      <div class="icon"> VolumeIcon</div>
     </div>
   </div>
 </template>
@@ -27,13 +27,14 @@ export default class Volume extends Vue {
       this.onChange(this.value + 10);
     }
   }
+
   private mouseMove(e: MouseEvent) {
     const circle = this.$refs.circleMain as HTMLElement;
     const circleHeight = circle.offsetHeight;
     const y = e.clientY - circle.offsetTop;
-    const percent = Math.round((y / circleHeight) * 1000)/10;
+    const percent = Math.round((y / circleHeight) * 1000) / 10;
     //from 0 to 100 clamp
-    this.onChange(100-Math.max(0, Math.min(percent, 100)));
+    this.onChange(100 - Math.max(0, Math.min(percent, 100)));
   }
 }
 </script>
@@ -43,6 +44,7 @@ export default class Volume extends Vue {
     width: 100%;
     aspect-ratio: 1;
   }
+
   @mixin flex-center {
     display: flex;
     justify-content: center;
@@ -52,38 +54,47 @@ export default class Volume extends Vue {
     border-radius: 50%;
   }
   user-select: none;
+
   > .circle {
     &, > .progress {
       @include circle;
     }
+
     @include flex-center;
     position: relative;
-    > *{
+
+    > * {
       transition: opacity .5s;
     }
+
     > .overlay {
       position: absolute;
       width: 70% !important;
       height: 70% !important;
       @include circle;
+      background: rgba(0, 0, 0, 0.2);
+
       > .text {
         font-size: 1.5rem;
         opacity: 0;
         @include flex-center;
       }
+
       &:before {
         content: "";
         position: absolute;
         inset: 0;
         border-radius: 50%;
-        padding: 10px;
-        background: conic-gradient(rgb(3, 133, 255) var(--volume-percent), rgb(242, 242, 242) var(--volume-percent));
+        padding: 10%; // change if procent changing
+        background: conic-gradient(rgb(3, 133, 255, 0.7) var(--volume-percent), rgba(242, 242, 242, 0.3) var(--volume-percent));
         mask: linear-gradient(#fff, #fff, #fff, #fff, #fff, #fff) content-box, linear-gradient(#fff, #fff, #fff, #fff, #fff, #fff);
         -webkit-mask-composite: xor;
         mask-composite: exclude;
         pointer-events: none;
+
       }
     }
+
     > .icon {
       position: absolute;
       top: 0;
@@ -94,12 +105,14 @@ export default class Volume extends Vue {
       color: #fff;
       @include flex-center;
     }
+
     &:hover {
       > .overlay {
         > .text {
           opacity: 1;
         }
       }
+
       > .icon {
         opacity: 0;
       }
