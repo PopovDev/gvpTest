@@ -1,9 +1,16 @@
 <template>
   <div class="video" ref="videoMain" draggable="false">
     <div class="container">
-      <video ref="video" preload="metadata"></video>
+      <div class="poster">
+        <div class="loading" v-if="!posterLoaded" >
+        </div>
+        <img :src="posterSrc" alt="" v-show="posterLoaded" @load="posterLoaded = true">
+      </div>
+      <video ref="video"
+             poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+             preload="metadata"></video>
     </div>
-    <div class="controls" :class="{show: paused||progressChanging}">
+    <div class="controls" :class="{show: paused||progressChanging}" v-show="posterLoaded">
       <div class="top">
         <div class="screen">
           <div class="full_screen" @click="fullScreenClick">
@@ -92,14 +99,11 @@ import Volume from "~/components/Volume.vue";
 
 @Component({components: {Volume, ProgressBar}, name: 'CVideo'})
 export default class CVideo extends Vue {
-  private pageName: string = '';
+  @Prop({required: true, type: Object})
+  public video!: IVideo;
 
-  public head() {
-    return {title: this.pageName}
-  }
-
-  @Getter("video/showingVideo")
-  private video!: IVideo;
+  public posterSrc: string = "";
+  private posterLoaded: boolean = false;
 
   private videoElement: HTMLVideoElement | null = null;
   private paused: boolean = true;
@@ -159,24 +163,21 @@ export default class CVideo extends Vue {
     this.paused = !this.paused;
   }
 
-
   private loadVideo() {
     if (!this.videoElement) return;
     const url = `/video/${this.video.file}`;
     this.videoElement.src = url
-    this.videoElement.poster = `${url}?poster=1`;
+    this.posterSrc = `${url}?poster=1`;
     this.videoElement.load();
-    this.pageName = this.video.title;
   }
-
   private mounted() {
-    console.log(this.video)
     this.videoElement = this.$refs.video as HTMLVideoElement;
     this.videoElement.ontimeupdate = this.timeUpdate;
     this.videoElement.onpause = () => this.paused = true;
     this.videoElement.onplay = () => this.paused = false;
 
     this.loadVideo();
+
   }
 
 

@@ -37,11 +37,6 @@ export default class CVideo extends Vue {
   @Prop({required: true})
   private readonly loadedFrags!: TimeRanges | null;
 
-  @Emit('progressChange')
-  private progressChange(progress: number) {
-    return progress;
-  }
-
   @Emit('holdChange')
   private holdChange(hold: boolean) {
     this.hold = hold;
@@ -83,7 +78,7 @@ export default class CVideo extends Vue {
     const progressWidth = progressElement.offsetWidth;
     const progressX = progressElement.getBoundingClientRect().left;
     const progress = (e.clientX - progressX) / progressWidth * 100;
-    this.progressChange(Math.min(Math.max(progress, 0), 100));
+    this.$emit('progressChange', progress);
   }
 
 
