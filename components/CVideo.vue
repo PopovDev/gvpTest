@@ -97,8 +97,8 @@ export default class CVideo extends Vue {
     return {title: this.pageName}
   }
 
-  @Prop({required: true, type: Object})
-  public video!: IVideo;
+  @Getter("video/showingVideo")
+  private video!: IVideo;
 
   private videoElement: HTMLVideoElement | null = null;
   private paused: boolean = true;
