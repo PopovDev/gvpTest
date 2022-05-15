@@ -2,8 +2,6 @@
   <div class="video" ref="videoMain" draggable="false">
     <div class="container">
       <div class="poster">
-        <div class="loading" v-if="!posterLoaded" >
-        </div>
         <img :src="posterSrc" alt="" v-show="posterLoaded" @load="posterLoaded = true">
       </div>
       <video ref="video"
