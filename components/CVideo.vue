@@ -169,6 +169,7 @@ export default class CVideo extends Vue {
   }
 
   private mounted() {
+    console.log(this.video)
     this.videoElement = this.$refs.video as HTMLVideoElement;
     this.videoElement.ontimeupdate = this.timeUpdate;
     this.videoElement.onpause = () => this.paused = true;

@@ -28,9 +28,11 @@ export default class Index extends Vue {
   async fetch() {
     const id = this.$route.params.id;
     await this.loadVideo(id);
+  }
+  async mounted() {
+    const id = this.$route.params.id;
     await this.setShowingVideo(id);
   }
-
 }
 
 
