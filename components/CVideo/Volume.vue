@@ -7,15 +7,18 @@
     <div class="circle" :style="{'--volume-percent': value+'%'}" :class="{active: hold}">
       <div class="progress"></div>
       <div class="overlay">
+
         <span class="text" v-if="value>0">{{ Math.round(value) }}</span>
         <span class="text" v-else>Muted</span>
       </div>
-      <div class="icon"> VolumeIcon</div>
+      <div class="icon">
+        <img src="/icons/volumeFull.png" alt="">
+      </div>
     </div>
   </div>
 </template>
 <script lang="ts">
-import {Component, Vue, Prop, Emit, Watch} from 'nuxt-property-decorator';
+import {Component, Vue, Prop, Emit, } from 'nuxt-property-decorator';
 
 @Component({name: 'Volume'})
 export default class Volume extends Vue {
@@ -83,7 +86,8 @@ export default class Volume extends Vue {
       clientX: e.touches[0]?.clientX || 0,
     })
   }
-  private setupEvents(){
+
+  private setupEvents() {
     this.mainEl?.addEventListener('wheel', this.onScroll);
 
     document?.addEventListener('mouseup', this.mouseUp);
@@ -104,7 +108,7 @@ export default class Volume extends Vue {
   }
 
   private mounted() {
-      this.setupEvents();
+    this.setupEvents();
   }
 
   private beforeDestroy() {
@@ -142,6 +146,19 @@ export default class Volume extends Vue {
     @include flex-center;
     position: relative;
 
+    > .volumeContainer {
+
+
+    }
+
+    > .icon {
+      position: absolute;
+      > img {
+        width: 50%;
+        height: 50%;
+      }
+    }
+
     > * {
       transition: opacity .5s;
     }
@@ -152,6 +169,12 @@ export default class Volume extends Vue {
       height: 70% !important;
       @include circle;
       background: rgba(0, 0, 0, 0.4);
+
+
+      > img {
+        width: 70%;
+        height: 70%;
+      }
 
       > .text {
         font-size: 1.5rem;

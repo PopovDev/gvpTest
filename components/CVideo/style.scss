@@ -91,24 +91,31 @@ $div_height: 55px;
           transition: background-color 0.5s;
         }
 
+
         @mixin flBtn {
           height: 70%;
           aspect-ratio: 1/1;
           max-width: 40%;
-          background: #2b830b;
           cursor: pointer;
           &:hover {
-            background: #0003ff;
             opacity: 1!important;
           }
         }
 
         > .full_screen {
           @include flBtn;
+          > img{
+            height: 100%;
+            width:  100%;
+          }
         }
 
         > .picture_in_picture {
           @include flBtn;
+          > img{
+            height: 100%;
+            width: 100%;
+          }
         }
 
 
@@ -223,10 +230,13 @@ $div_height: 55px;
             width: 40%;
             aspect-ratio: 16/9;
             max-height: 80%;
-            background: red;
             cursor: pointer;
             opacity: 0.4;
             transition: opacity 0.5s;
+            > img{
+              height: 100%;
+              width: 100%;
+            }
 
             &:hover {
               opacity: 0.7;
@@ -237,10 +247,15 @@ $div_height: 55px;
             width: 40%;
             aspect-ratio: 16/9;
             max-height: 80%;
-            background: red;
             cursor: pointer;
             opacity: 0.4;
             transition: opacity 0.5s;
+            justify-content: center;
+            align-content: center;
+            > img{
+              height: 100%;
+              width: 100%;
+            }
 
             &:hover {
               opacity: 0.7;
@@ -452,11 +467,14 @@ $div_height: 55px;
           opacity: 1;
           position: absolute;
           transition: opacity 0.5s, height 0.5s, transform 0.5s;
-        height: 23px;
-        width: 46px;
-          background: #ff0000;
-        bottom: 10%;
+        height: 17px;
+        width: 40px;
         right: 1%;
+        bottom: 10px;
+        > img{
+          height: 100%;
+          width: 100%;
+        }
       }
 
       &:hover {

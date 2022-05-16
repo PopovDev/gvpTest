@@ -13,8 +13,10 @@
       <div class="top">
         <div class="screen">
           <div class="full_screen" @click="fullScreenClick">
+            <img src="/icons/fullscreenicon.png" alt="">
           </div>
           <div class="picture_in_picture" @click="picInPicClick">
+            <img src="/icons/fullscreenicon.png" alt="">
           </div>
         </div>
       </div>
@@ -23,8 +25,8 @@
       </div>
       <div class="middle" @click="playClick">
         <div class="play_btn">
-          <img v-if="!paused" src="/icons/pause.PNG" alt="">
-          <img v-else src="/icons/play.PNG" alt="">
+          <img v-if="!paused" src="/icons/pause.png" alt="">
+          <img v-else src="/icons/play.png" alt="">
         </div>
       </div>
       <div class="bottom" :class="{open:progressChanging}">
@@ -39,8 +41,12 @@
         </div>
         <div class="retractable">
           <div class="left">
-            <div class="prev_video"></div>
-            <div class="next_video"></div>
+            <div class="prev_video">
+              <img src="/icons/switcherVideo.png" alt="">
+            </div>
+            <div class="next_video">
+              <img src="/icons/switcherVideo2.png" alt="">
+            </div>
           </div>
           <div class="right">
             <div class="icon"></div>
@@ -76,6 +82,7 @@
           </div>
         </div>
         <div class="up_arrow">
+          <img src="/icons/upArrow.png" alt="">
         </div>
       </div>
     </div>
