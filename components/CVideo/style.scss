@@ -5,6 +5,10 @@
   justify-content: center;
 }
 
+$icon_height: 31px;
+$div_height: 55px;
+
+
 .video {
   @include flexbox-layout;
   width: 100%;
@@ -67,8 +71,8 @@
     > .top {
       z-index: 2;
       width: 100%;
-      height: 10%;
       top: 0;
+      height: $div_height;
       right: 0;
       justify-content: flex-end;
       flex-direction: row;
@@ -120,7 +124,7 @@
 
 
     > .volumeContainer {
-      height: 30%;
+      height: 23%;
       aspect-ratio: 1;
       max-width: 40%;
       position: absolute;
@@ -139,10 +143,11 @@
       width: 100%;
       height: 80%;
 
+
       > .play_btn {
         cursor: pointer;
         user-select: none;
-        width: 7%;
+        width: 77px;
         aspect-ratio: 16/9;
         transition: opacity 0.5s;
         @include flexbox-layout;
@@ -162,7 +167,7 @@
       bottom: 0;
       margin-bottom: -2%;
       width: 98%;
-      height: 10%;
+      height: 43px;
       justify-content: flex-start;
 
       > * {
@@ -210,8 +215,8 @@
           align-items: center;
           justify-content: space-between;
           flex-direction: row;
-          height: 80%;
-          aspect-ratio: 4/1;
+          height: 50px;
+          width: 144px;
           max-width: 50%;
 
           > .prev_video {
@@ -248,19 +253,17 @@
           flex-direction: row;
           position: relative;
           transition: margin-bottom 0.5s;
-          height: 80%;
+          height: 50px;
+          width: 155px;
           max-width: 35%;
-          aspect-ratio: 3/1;
 
           > .icon {
             position: absolute;
             opacity: 0;
             align-items: flex-end;
             z-index: 3;
-            height: 80%;
+            height: $icon_height;
             aspect-ratio: 1;
-            max-height: 80%;
-            max-width: 80%;
             transition: height 0.5s, opacity 0.5s;
             background: #a20505;
 
@@ -274,10 +277,8 @@
             opacity: 0;
             order: 2;
             align-items: flex-end;
-            height: 80%;
+            height: $icon_height;
             aspect-ratio: 1;
-            max-height: 80%;
-            max-width: 80%;
             transition: height 0.5s, opacity 0.5s;
             background: #a20505;
 
@@ -286,8 +287,8 @@
           > .settings {
             opacity: 0;
             width: 0;
+            height: $icon_height;
             transition: opacity 0.5s, width 0.5s;
-            aspect-ratio: 2/1;
             @include flexbox-layout;
             background: #736d6d;
             max-height: 80%;
@@ -303,10 +304,10 @@
               justify-content: space-around;
 
               > * {
-                width: 40%;
+                width: $icon_height;
                 @include flexbox-layout;
                 transition: height 0.5s, transform 0.5s, opacity 0.5s;
-                height: 100%;
+                height: $icon_height;
                 justify-content: flex-start;
               }
 
@@ -353,7 +354,7 @@
                 &:hover {
                   .graphic {
                     opacity: 1;
-                    width: 30%;
+                    width: $icon_height*2;
                   }
                 }
               }
@@ -400,7 +401,7 @@
                 &:hover {
                   .speeds {
                     opacity: 1;
-                    width: 30%;
+                    width: $icon_height*2;
                   }
                 }
 
@@ -410,7 +411,7 @@
             }
 
             &:hover {
-              width: 100%;
+              width: $icon_height*4;
             }
           }
 
@@ -421,7 +422,7 @@
       }
 
       @mixin openState {
-        height: 15%;
+        height: 66px;
         > .up_arrow {
           transform: translate(0, -200%);
           opacity: 0;
@@ -451,8 +452,8 @@
           opacity: 1;
           position: absolute;
           transition: opacity 0.5s, height 0.5s, transform 0.5s;
-          width: 5%;
-          aspect-ratio: 2/1;
+        height: 23px;
+        width: 46px;
           background: #ff0000;
         bottom: 10%;
         right: 1%;
@@ -473,7 +474,7 @@
       }
 
       .top, .volumeContainer {
-        opacity: 0.4;
+        opacity: 0.6;
       }
       .bottom {
         opacity: 1;

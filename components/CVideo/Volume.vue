@@ -42,6 +42,7 @@ export default class Volume extends Vue {
   *, > * {
     width: 100%;
     aspect-ratio: 1;
+    color: white;
   }
 
   @mixin flex-center {
@@ -70,7 +71,7 @@ export default class Volume extends Vue {
       width: 70% !important;
       height: 70% !important;
       @include circle;
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(0, 0, 0, 0.4);
 
       > .text {
         font-size: 1.5rem;
