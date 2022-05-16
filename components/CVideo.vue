@@ -1,5 +1,5 @@
 <template>
-  <div class="video" ref="videoMain" draggable="false">
+  <div class="video" ref="videoMain" draggable="false" @wheel="onScroll">
     <div class="container">
       <div class="poster">
         <img :src="posterSrc" alt="" v-show="posterLoaded" @load="posterLoaded = true">
@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="volumeContainer">
-        <Volume :value="25"></Volume>
+        <Volume :value="volume"></Volume>
       </div>
       <div class="middle" @click="playClick">
         <div class="play_btn">
@@ -94,7 +94,7 @@
 <script lang="ts">
 import {Component, Prop, Vue, Watch} from 'nuxt-property-decorator';
 import ProgressBar from "~/components/CVideo/ProgressBar.vue";
-import Volume from "~/components/Volume.vue";
+import Volume from "~/components/CVideo/Volume.vue";
 
 @Component({components: {Volume, ProgressBar}, name: 'CVideo'})
 export default class CVideo extends Vue {
@@ -109,6 +109,7 @@ export default class CVideo extends Vue {
   private progressChanging: boolean = false;
   private totalTime: number = 0;
   private videoProgress: number = 0;
+  private volume: number = 0;
   private loadedFrags: TimeRanges | null = null;
 
   private onProgressChange(progress: number) {
@@ -190,6 +191,22 @@ export default class CVideo extends Vue {
     }
 
   }
+  private onScroll(e: WheelEvent) {
+    if (!this.videoElement) return;
+    if (e.deltaY > 0) {
+      this.setVolume(this.volume - 5);
+    } else {
+      this.setVolume(this.volume + 5);
+    }
+  }
+  private setVolume(e: number) {
+    if (!this.videoElement) return;
+    console.log(e);
+    this.volume = e;
+    this.volume = Math.min(Math.max(this.volume, 0), 100);
+    sessionStorage.setItem("volume" ,this.volume.toString());
+    this.videoElement.volume = this.volume / 100;
+  }
 
   public mounted() {
     this.videoElement = this.$refs.video as HTMLVideoElement;
@@ -198,7 +215,10 @@ export default class CVideo extends Vue {
     this.videoElement.onplay = () => this.paused = false;
     document.addEventListener("keydown", this.keyDown);
     this.loadVideo();
+    this.setVolume(sessionStorage.getItem("volume") ? Number(sessionStorage.getItem("volume")) : 100);
+
   }
+
   public beforeDestroy() {
     document.removeEventListener("keydown", this.keyDown);
   }
