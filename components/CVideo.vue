@@ -1,12 +1,13 @@
 <template>
-  <div class="video" ref="videoMain" draggable="false" @wheel="onScroll">
+  <div class="video" ref="videoMain" draggable="false">
     <div class="container">
       <div class="poster">
         <img :src="posterSrc" alt="" v-show="posterLoaded" @load="posterLoaded = true">
       </div>
       <video ref="video"
              poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-             preload="metadata"></video>
+             preload="metadata">
+      </video>
     </div>
     <div class="controls" :class="{show: paused||progressChanging}" v-show="posterLoaded">
       <div class="top">
@@ -18,7 +19,7 @@
         </div>
       </div>
       <div class="volumeContainer">
-        <Volume :value="volume"></Volume>
+        <Volume :value="volume" @change="setVolume"></Volume>
       </div>
       <div class="middle" @click="playClick">
         <div class="play_btn">
@@ -58,7 +59,6 @@
                     </div>
                   </div>
                 </div>
-
                 <div class="speed">
                   <div class="speed_icon">
                   </div>
@@ -71,158 +71,16 @@
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
-
-
           </div>
         </div>
         <div class="up_arrow">
         </div>
       </div>
-
     </div>
   </div>
-
-
 </template>
 
-
 <style scoped lang="scss" src="./CVideo/style.scss"></style>
-
-<script lang="ts">
-import {Component, Prop, Vue, Watch} from 'nuxt-property-decorator';
-import ProgressBar from "~/components/CVideo/ProgressBar.vue";
-import Volume from "~/components/CVideo/Volume.vue";
-
-@Component({components: {Volume, ProgressBar}, name: 'CVideo'})
-export default class CVideo extends Vue {
-  @Prop({required: true, type: Object})
-  public video!: IVideo;
-
-  public posterSrc: string = "";
-  private posterLoaded: boolean = false;
-
-  private videoElement: HTMLVideoElement | null = null;
-  private paused: boolean = true;
-  private progressChanging: boolean = false;
-  private totalTime: number = 0;
-  private videoProgress: number = 0;
-  private volume: number = 0;
-  private loadedFrags: TimeRanges | null = null;
-
-  private onProgressChange(progress: number) {
-    if (!this.videoElement) return;
-    this.videoProgress = progress;
-    this.videoElement.currentTime = progress / 100 * this.videoElement.duration;
-  }
-
-  private progressChangingEmitted(e: boolean) {
-    this.progressChanging = e;
-  }
-
-  @Watch("paused")
-  private onPauseChange() {
-    if (this.paused)
-      this.videoElement!.pause();
-    else
-      this.videoElement!.play();
-  }
-
-  private timeUpdate() {
-    if (!this.videoElement) return;
-    this.videoProgress = (this.videoElement.currentTime / this.videoElement.duration || 0) * 100;
-    this.loadedFrags = this.videoElement.buffered;
-    this.totalTime = this.videoElement.duration;
-    if (isNaN(this.totalTime)) this.totalTime = 0;
-  }
-
-  private fullScreenClick() {
-    const videoMain = this.$refs.videoMain as any;
-    if (!videoMain) return;
-    if (document.fullscreenElement) {
-      document.exitFullscreen();
-    } else {
-      videoMain.requestFullscreen();
-    }
-  }
-
-  private picInPicClick() {
-    if (!this.videoElement) return;
-    const aDoc = document as any;
-    const aVideo = this.videoElement as any;
-    if (aDoc.pictureInPictureElement) {
-      aDoc.exitPictureInPicture();
-    } else if (aVideo.requestPictureInPicture) {
-      aVideo.requestPictureInPicture();
-    }
-  }
-
-  public playClick() {
-    this.paused = !this.paused;
-  }
-
-  private loadVideo() {
-    if (!this.videoElement) return;
-    const url = `/video/${this.video.file}`;
-    this.videoElement.src = url
-    this.posterSrc = `${url}?poster=1`;
-    this.videoElement.load();
-  }
-
-  private keyDown(e: KeyboardEvent) {
-    switch (e.code) {
-      case "Space":
-        this.playClick();
-        break;
-      case "ArrowLeft":
-        this.onProgressChange(this.videoProgress - 5);
-        break;
-      case "ArrowRight":
-        this.onProgressChange(this.videoProgress + 5);
-        break;
-      case "KeyF":
-        this.fullScreenClick();
-        break;
-      case "KeyP":
-        this.picInPicClick();
-        break;
-    }
-
-  }
-  private onScroll(e: WheelEvent) {
-    if (!this.videoElement) return;
-    if (e.deltaY > 0) {
-      this.setVolume(this.volume - 5);
-    } else {
-      this.setVolume(this.volume + 5);
-    }
-  }
-  private setVolume(e: number) {
-    if (!this.videoElement) return;
-    console.log(e);
-    this.volume = e;
-    this.volume = Math.min(Math.max(this.volume, 0), 100);
-    sessionStorage.setItem("volume" ,this.volume.toString());
-    this.videoElement.volume = this.volume / 100;
-  }
-
-  public mounted() {
-    this.videoElement = this.$refs.video as HTMLVideoElement;
-    this.videoElement.ontimeupdate = this.timeUpdate;
-    this.videoElement.onpause = () => this.paused = true;
-    this.videoElement.onplay = () => this.paused = false;
-    document.addEventListener("keydown", this.keyDown);
-    this.loadVideo();
-    this.setVolume(sessionStorage.getItem("volume") ? Number(sessionStorage.getItem("volume")) : 100);
-
-  }
-
-  public beforeDestroy() {
-    document.removeEventListener("keydown", this.keyDown);
-  }
-
-}
-
-</script>
+<script lang="ts" src="./CVideo/script.ts"></script>

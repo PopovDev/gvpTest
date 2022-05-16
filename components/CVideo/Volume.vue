@@ -1,39 +1,118 @@
 <template>
-  <div class="main" @click="clickValue" @mousemove="mouseMove" ref="circleMain">
-    <div class="circle" :style="{'--volume-percent': value+'%'}">
+  <div class="main"
+       @click="clickValue"
+       @mousemove="mouseMove"
+       @mousedown="mouseDown"
+       ref="circleMain">
+    <div class="circle" :style="{'--volume-percent': value+'%'}" :class="{active: hold}">
       <div class="progress"></div>
-      <div class="overlay"><span class="text">{{ value }}</span></div>
+      <div class="overlay">
+        <span class="text" v-if="value>0">{{ Math.round(value) }}</span>
+        <span class="text" v-else>Muted</span>
+      </div>
       <div class="icon"> VolumeIcon</div>
     </div>
   </div>
 </template>
 <script lang="ts">
-import {Component, Vue, Prop, Emit} from 'nuxt-property-decorator';
+import {Component, Vue, Prop, Emit, Watch} from 'nuxt-property-decorator';
 
 @Component({name: 'Volume'})
 export default class Volume extends Vue {
-  @Prop({default: 0, required: true})
+  @Prop({default: 0, required: true, type: Number})
   private readonly value!: number;
+
+  private readonly mainEl = (this.$parent.$el as HTMLElement);
+
+  private hold = false;
+  private holdStartY = 0;
+  private holdDStartY = 0;
+  private valueBeforeMute: number = 100;
 
   @Emit('change')
   private onChange(value: number) {
-    return value;
+    return Math.max(0, Math.min(value, 100));
   }
 
-  private clickValue() {
-    if (this.value + 10 >= 100) {
-      this.onChange(0);
+  private unmute() {
+    this.onChange(this.valueBeforeMute);
+    this.valueBeforeMute = 100;
+  }
+
+  private mute() {
+    this.valueBeforeMute = this.value;
+    this.onChange(0);
+  }
+
+  private clickValue(e: MouseEvent) {
+    if (Math.abs(e.clientY - this.holdDStartY) > 2) return;
+    if (this.value === 0) {
+      this.unmute();
     } else {
-      this.onChange(this.value + 10);
+      this.mute();
     }
   }
 
+  private onScroll(e: WheelEvent) {
+    this.onChange(this.value - 5 * Math.sign(e.deltaY));
+  }
+
+  private mouseDown(e: MouseEvent) {
+    this.hold = true;
+    this.holdStartY = e.clientY;
+    this.holdDStartY = this.holdStartY;
+  }
+
+  private mouseUp(_e: MouseEvent) {
+    this.hold = false;
+  }
+
   private mouseMove(e: MouseEvent) {
-    const circle = this.$refs.circleMain as HTMLElement;
-    const circleHeight = circle.offsetHeight;
-    const y = e.clientY - circle.offsetTop;
-    const percent = Math.round((y / circleHeight) * 1000) / 10;
-    this.onChange(100 - Math.max(0, Math.min(percent, 100)));
+    if (this.hold) {
+      const delta = ((e.clientY - this.holdStartY)) / 2;
+      const newValue = this.value - delta;
+
+      this.onChange(Math.max(0, Math.min(newValue, 100)));
+      this.holdStartY = e.clientY;
+    }
+  }
+
+  private static touchToMouse(e: TouchEvent) {
+    return new MouseEvent("", {
+      clientY: e.touches[0]?.clientY || 0,
+      clientX: e.touches[0]?.clientX || 0,
+    })
+  }
+  private setupEvents(){
+    this.mainEl?.addEventListener('wheel', this.onScroll);
+
+    document?.addEventListener('mouseup', this.mouseUp);
+    document?.addEventListener('mousemove', this.mouseMove);
+
+    (this.$el as HTMLElement)?.addEventListener('touchstart', (e: TouchEvent) => {
+      e.preventDefault();
+      this.mouseDown(Volume.touchToMouse(e));
+    });
+    (this.$el as HTMLElement)?.addEventListener('touchend', (e: TouchEvent) => {
+      e.preventDefault();
+      this.mouseUp(Volume.touchToMouse(e));
+    });
+    (this.$el as HTMLElement)?.addEventListener('touchmove', (e: TouchEvent) => {
+      e.preventDefault();
+      this.mouseMove(Volume.touchToMouse(e));
+    });
+  }
+
+  private mounted() {
+      this.setupEvents();
+  }
+
+  private beforeDestroy() {
+
+    this.mainEl?.removeEventListener('wheel', this.onScroll);
+    document?.removeEventListener('mouseup', this.mouseUp);
+    document?.removeEventListener('mousemove', this.mouseMove);
+
   }
 }
 </script>
@@ -58,6 +137,7 @@ export default class Volume extends Vue {
     &, > .progress {
       @include circle;
     }
+
     @include flex-center;
     position: relative;
 
@@ -104,16 +184,23 @@ export default class Volume extends Vue {
       @include flex-center;
     }
 
-    &:hover {
+    @mixin itemHover {
       > .overlay {
         > .text {
           opacity: 1;
         }
       }
-
       > .icon {
         opacity: 0;
       }
+    }
+
+    &:hover {
+      @include itemHover;
+    }
+
+    &:active {
+      @include itemHover;
     }
   }
 }
