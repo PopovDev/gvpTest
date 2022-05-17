@@ -15,6 +15,7 @@ $div_height: 55px;
   height: 100%;
   aspect-ratio: 16/9;
   position: relative;
+
   * {
     user-select: none;
   }
@@ -42,7 +43,7 @@ $div_height: 55px;
 
 
       > img {
-        width:99%;
+        width: 99%;
         height: 99%;
       }
     }
@@ -69,19 +70,40 @@ $div_height: 55px;
     }
 
     > .top {
-      z-index: 2;
+      z-index: 4;
       width: 100%;
-      top: 0;
+      top: 1%;
       height: $div_height;
       right: 0;
       justify-content: flex-end;
       flex-direction: row;
+
+
+      > .time {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 2/1;
+        font-size: 30px;
+        align-content: center;
+        text-align: center;
+        color: #fff;
+
+        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+        > .text {
+          width: 100%;
+          color: #fff;
+        }
+      }
 
       > .screen {
         order: 2;
         height: 100%;
         aspect-ratio: 2/1;
         @include flexbox-layout;
+        z-index: 5;
         flex-direction: row;
         top: 1%;
         right: 1%;
@@ -96,23 +118,27 @@ $div_height: 55px;
           height: 70%;
           aspect-ratio: 1/1;
           max-width: 40%;
+          min-height: 31px;
+          min-width: 31px;
           cursor: pointer;
           &:hover {
-            opacity: 1!important;
+            opacity: 1 !important;
           }
         }
 
         > .full_screen {
           @include flBtn;
-          > img{
+
+          > img {
             height: 100%;
-            width:  100%;
+            width: 100%;
           }
         }
 
         > .picture_in_picture {
           @include flBtn;
-          > img{
+
+          > img {
             height: 100%;
             width: 100%;
           }
@@ -134,6 +160,8 @@ $div_height: 55px;
       height: 23%;
       aspect-ratio: 1;
       max-width: 40%;
+      min-width: 90px;
+      min-height: 90px;
       position: absolute;
       z-index: 4;
       top: 1%;
@@ -159,10 +187,12 @@ $div_height: 55px;
         transition: opacity 0.5s;
         @include flexbox-layout;
         opacity: 0.4;
-        > img{
+
+        > img {
           width: 100%;
           height: 100%;
         }
+
         &:hover {
           opacity: 0.7;
         }
@@ -224,6 +254,7 @@ $div_height: 55px;
           flex-direction: row;
           height: 50px;
           width: 144px;
+          min-width: 144px;
           max-width: 50%;
 
           > .prev_video {
@@ -231,15 +262,16 @@ $div_height: 55px;
             aspect-ratio: 16/9;
             max-height: 80%;
             cursor: pointer;
-            opacity: 0.4;
+            opacity: 0.7;
             transition: opacity 0.5s;
-            > img{
+
+            > img {
               height: 100%;
               width: 100%;
             }
 
             &:hover {
-              opacity: 0.7;
+              opacity: 1;
             }
           }
 
@@ -248,17 +280,18 @@ $div_height: 55px;
             aspect-ratio: 16/9;
             max-height: 80%;
             cursor: pointer;
-            opacity: 0.4;
+            opacity: 0.6;
             transition: opacity 0.5s;
             justify-content: center;
             align-content: center;
-            > img{
+
+            > img {
               height: 100%;
               width: 100%;
             }
 
             &:hover {
-              opacity: 0.7;
+              opacity: 1;
             }
           }
         }
@@ -288,7 +321,8 @@ $div_height: 55px;
               }
             }
           }
-          > .pseudo_icon{
+
+          > .pseudo_icon {
             opacity: 0;
             order: 2;
             align-items: flex-end;
@@ -431,8 +465,6 @@ $div_height: 55px;
           }
 
 
-
-
         }
       }
 
@@ -464,14 +496,14 @@ $div_height: 55px;
       }
 
       > .up_arrow {
-          opacity: 1;
-          position: absolute;
-          transition: opacity 0.5s, height 0.5s, transform 0.5s;
+        opacity: 1;
+        position: absolute;
+        transition: opacity 0.5s, height 0.5s, transform 0.5s;
         height: 17px;
         width: 40px;
-        right: 1%;
         bottom: 10px;
-        > img{
+
+        > img {
           height: 100%;
           width: 100%;
         }

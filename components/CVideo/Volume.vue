@@ -124,6 +124,7 @@ export default class Volume extends Vue {
 .main {
   *, > * {
     width: 100%;
+
     aspect-ratio: 1;
     color: white;
   }

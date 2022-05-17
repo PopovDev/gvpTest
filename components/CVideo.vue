@@ -19,6 +19,9 @@
             <img src="/icons/fullscreenicon.png" alt="">
           </div>
         </div>
+        <div class="time">
+          <div class="text>">12:11/21:43</div>
+        </div>
       </div>
       <div class="volumeContainer">
         <Volume :value="volume" @change="setVolume"></Volume>
