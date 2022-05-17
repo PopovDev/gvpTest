@@ -20,10 +20,12 @@
           </div>
         </div>
         <div class="time">
+          <div class="bg">
           <div class="text">
             <span class="current">{{displayTime.current}}</span>
             <span class="separator">/</span>
             <span class="total">{{displayTime.total}}</span>
+          </div>
           </div>
         </div>
       </div>
