@@ -30,6 +30,7 @@
       "@types/node",
       "@types/firebase",
       "@types/hls.js",
+      "@nuxtjs/firebase"
     ],
     "typeRoots": [
       "./types.d.ts"
