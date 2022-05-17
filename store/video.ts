@@ -1,5 +1,3 @@
-import db from "~/plugins/firebase";
-import {collection, getDocs, doc, getDoc, where, query} from "firebase/firestore";
 import {ActionTree, ActionContext} from 'vuex'
 
 export const state = (): VideoState => ({
@@ -17,14 +15,18 @@ export const mutations = {
 }
 export const actions: ActionTree<VideoState, VideoState> = {
   async loadVideo({commit, state}, id: string) {
+    console.log("loadVideo", id);
+    const db = this.$fire.firestore;
     if (state.loadedVideos.find(v => v.id === id)) return;
-    const videoSnap = await getDocs(query(collection(db, 'videos'), where('id', '==', id)));
+
+    const videoSnap = await db.collection("videos").where("id", "==", id).get();
     if (videoSnap.empty) return;
     await commit('addLoadedVideo', videoSnap.docs[0].data() as IVideo);
   },
   async videoExists({commit, state, dispatch}, id: string) {
+    const db = this.$fire.firestore;
     if (state.loadedVideos.find(v => v.id === id)) return true;
-    const videoSnap = await getDocs(query(collection(db, 'videos'), where('id', '==', id)));
+    const videoSnap = await db.collection("videos").where("id", "==", id).get();
     if (!videoSnap.empty) {
       await commit('addLoadedVideo', videoSnap.docs[0].data() as IVideo);
       return true;

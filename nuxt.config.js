@@ -17,11 +17,6 @@ export default {
     ]
   },
   css: [],
-  plugins: [{
-    src:'~/plugins/firebase.ts',
-    ssr: false,
-    mode: 'client'
-  }],
   serverMiddleware: [
     {
       path: '/video', handler: '~/server-middleware/Video.ts'
@@ -29,9 +24,18 @@ export default {
       path: '/api', handler: '~/server-middleware/Api.ts'
     }
   ],
+
   components: true,
   buildModules: ['@nuxt/typescript-build'],
-  modules: ['@nuxtjs/axios', '@nuxtjs/dotenv'],
+  modules: ['@nuxtjs/axios', '@nuxtjs/dotenv',"@nuxtjs/firebase"],
+  firebase:{
+      config: require('./firebase-config.json'),
+      services:{
+        firestore: true,
+        auth: true,
+        appCheck: true
+      }
+  },
   axios: {baseURL: '/'},
   build: {}
 }

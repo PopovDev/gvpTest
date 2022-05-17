@@ -42,3 +42,16 @@
 }
 
 </style>
+<script lang="ts">
+import {Action, Component, Getter, Vue,} from 'nuxt-property-decorator';
+
+@Component({name: 'DefaultLayout'})
+export default class DefaultLayout extends Vue {
+  private mounted() {
+
+   this.$fire.appCheck.activate("abcdefghijklmnopqrstuvwxy-1234567890abcd", true);
+  }
+}
+
+
+</script>
