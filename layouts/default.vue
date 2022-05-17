@@ -11,6 +11,9 @@
     <div class="body">
 
 
+      <div class="login">
+        <LogInPg/>
+      </div>
 
 
       <nuxt/>

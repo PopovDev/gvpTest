@@ -14,7 +14,7 @@
   </div>
 </template>
 <script lang="ts">
-import {Action, Component, Getter, Vue,} from 'nuxt-property-decorator';
+import {Component, Vue,} from 'nuxt-property-decorator';
 
 @Component({name: 'Index'})
 export default class Index extends Vue {
