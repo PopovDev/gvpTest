@@ -17,7 +17,11 @@ export default {
     ]
   },
   css: [],
-  plugins: ["~/plugins/firebase.ts"],
+  plugins: [{
+    src:'~/plugins/firebase.ts',
+    ssr: false,
+    mode: 'client'
+  }],
   serverMiddleware: [
     {
       path: '/video', handler: '~/server-middleware/Video.ts'
