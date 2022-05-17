@@ -11,6 +11,11 @@
     <div class="body">
 
 
+      <div class="login">
+        <LogInPg/>
+      </div>
+
+
       <nuxt/>
     </div>
   </div>
@@ -29,6 +34,7 @@
   flex-direction: column;
   background-color: #414141;
 
+
   > .header {
     display: flex;
     justify-content: center;
@@ -40,6 +46,15 @@
     display: flex;
     flex-grow: 1;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    > .login{
+      position: absolute;
+      z-index: 60;
+      height: 70%;
+      aspect-ratio: 1/2;
+      background-color: rebeccapurple;
+    }
   }
 }
 
