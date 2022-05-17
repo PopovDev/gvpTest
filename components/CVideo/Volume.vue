@@ -18,15 +18,12 @@
   </div>
 </template>
 <script lang="ts">
-import {Component, Vue, Prop, Emit, } from 'nuxt-property-decorator';
+import {Component, Vue, Prop, Emit,} from 'nuxt-property-decorator';
 
 @Component({name: 'Volume'})
 export default class Volume extends Vue {
   @Prop({default: 0, required: true, type: Number})
   private readonly value!: number;
-
-  private readonly mainEl = (this.$parent.$el as HTMLElement);
-
   private hold = false;
   private holdStartY = 0;
   private holdDStartY = 0;
@@ -88,11 +85,9 @@ export default class Volume extends Vue {
   }
 
   private setupEvents() {
-    this.mainEl?.addEventListener('wheel', this.onScroll);
-
+    (this.$parent.$el as HTMLElement).addEventListener('wheel', this.onScroll);
     document?.addEventListener('mouseup', this.mouseUp);
     document?.addEventListener('mousemove', this.mouseMove);
-
     (this.$el as HTMLElement)?.addEventListener('touchstart', (e: TouchEvent) => {
       e.preventDefault();
       this.mouseDown(Volume.touchToMouse(e));
@@ -113,7 +108,7 @@ export default class Volume extends Vue {
 
   private beforeDestroy() {
 
-    this.mainEl?.removeEventListener('wheel', this.onScroll);
+    (this.$parent.$el as HTMLElement)?.removeEventListener('wheel', this.onScroll);
     document?.removeEventListener('mouseup', this.mouseUp);
     document?.removeEventListener('mousemove', this.mouseMove);
 
@@ -154,6 +149,7 @@ export default class Volume extends Vue {
 
     > .icon {
       position: absolute;
+
       > img {
         width: 50%;
         height: 50%;
