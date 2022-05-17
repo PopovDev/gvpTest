@@ -9,6 +9,7 @@ export default class CVideo extends Vue {
 
   public posterSrc: string = "";
   private posterLoaded: boolean = false;
+  private videoLoaded: boolean = false;
 
   private videoElement: HTMLVideoElement | null = null;
   private paused: boolean = true;
@@ -17,6 +18,10 @@ export default class CVideo extends Vue {
   private videoProgress: number = 0;
   private volume: number = 0;
   private loadedFrags: TimeRanges | null = null;
+  private displayTime = {
+    current: "00:00",
+    total: "00:00",
+  }
 
   private onProgressChange(progress: number) {
     if (!this.videoElement) return;
@@ -36,12 +41,21 @@ export default class CVideo extends Vue {
       await this.videoElement!.play();
   }
 
+  private static formatTime(time: number): string {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time - minutes * 60);
+    return `${minutes < 10 ? "0" + minutes : minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
+  }
+
   private timeUpdate() {
     if (!this.videoElement) return;
     this.videoProgress = (this.videoElement.currentTime / this.videoElement.duration || 0) * 100;
     this.loadedFrags = this.videoElement.buffered;
     this.totalTime = this.videoElement.duration;
     if (isNaN(this.totalTime)) this.totalTime = 0;
+
+    this.displayTime.current = CVideo.formatTime(this.videoElement.currentTime);
+    this.displayTime.total = CVideo.formatTime(this.totalTime);
   }
 
   private async fullScreenClick() {
@@ -75,6 +89,10 @@ export default class CVideo extends Vue {
     this.videoElement.src = url
     this.posterSrc = `${url}?poster=1`;
     this.videoElement.load();
+    this.videoElement.addEventListener("loadedmetadata", () => {
+      this.timeUpdate();
+      this.videoLoaded = true;
+    });
   }
 
   private async keyDown(e: KeyboardEvent) {
@@ -105,7 +123,7 @@ export default class CVideo extends Vue {
 
     sessionStorage.setItem("volume", this.volume.toString());
 
-    this.videoElement.volume =  this.volume / 100;
+    this.videoElement.volume = this.volume / 100;
   }
 
   private initVideoElement() {

@@ -36,6 +36,11 @@ export default {
         appCheck: true
       }
   },
+  loading: {
+    continuous: true,
+    color: '#847ff9',
+    height: '2px',
+  },
   axios: {baseURL: '/'},
   build: {}
 }

@@ -9,7 +9,7 @@
              preload="metadata">
       </video>
     </div>
-    <div class="controls" :class="{show: paused||progressChanging}" v-show="posterLoaded">
+    <div class="controls" :class="{show: paused||progressChanging}" v-show="posterLoaded&&videoLoaded">
       <div class="top">
         <div class="screen">
           <div class="full_screen" @click="fullScreenClick">
@@ -20,7 +20,11 @@
           </div>
         </div>
         <div class="time">
-          <div class="text>">12:11/21:43</div>
+          <div class="text">
+            <span class="current">{{displayTime.current}}</span>
+            <span class="separator">/</span>
+            <span class="total">{{displayTime.total}}</span>
+          </div>
         </div>
       </div>
       <div class="volumeContainer">

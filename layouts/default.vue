@@ -28,12 +28,14 @@
   display: flex;
   flex-direction: column;
   background-color: #414141;
+
   > .header {
     display: flex;
     justify-content: center;
     align-items: center;
     background: #544f85;
   }
+
   > .body {
     display: flex;
     flex-grow: 1;
@@ -49,7 +51,7 @@ import {Action, Component, Getter, Vue,} from 'nuxt-property-decorator';
 export default class DefaultLayout extends Vue {
   private mounted() {
 
-   this.$fire.appCheck.activate("abcdefghijklmnopqrstuvwxy-1234567890abcd", true);
+    this.$fire.appCheck.activate("abcdefghijklmnopqrstuvwxy-1234567890abcd", true);
   }
 }
 

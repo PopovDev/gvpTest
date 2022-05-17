@@ -3,16 +3,16 @@
        @click="clickValue"
        @mousemove="mouseMove"
        @mousedown="mouseDown"
-       ref="circleMain">
+       ref="circleMain"
+  >
     <div class="circle" :style="{'--volume-percent': value+'%'}" :class="{active: hold}">
       <div class="progress"></div>
       <div class="overlay">
-
         <span class="text" v-if="value>0">{{ Math.round(value) }}</span>
         <span class="text" v-else>Muted</span>
       </div>
       <div class="icon">
-        <img src="/icons/volumeFull.png" alt="">
+        <img src="/icons/volumeFull.png" draggable="false" alt="">
       </div>
     </div>
   </div>
