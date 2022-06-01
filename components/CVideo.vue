@@ -9,7 +9,7 @@
              preload="metadata">
       </video>
     </div>
-    <div class="controls" :class="{show: paused||progressChanging}" v-show="posterLoaded&&videoLoaded">
+    <div class="controls show" :class="{show: paused||progressChanging}" v-show="posterLoaded&&videoLoaded">
       <div class="top">
         <div class="screen">
           <div class="full_screen" @click="fullScreenClick">
@@ -29,7 +29,7 @@
           </div>
         </div>
       </div>
-      <div class="volumeContainer">
+      <div class="volumeContainer show">
         <Volume :value="volume" @change="setVolume"></Volume>
       </div>
       <div class="middle" @click="playClick">
@@ -38,7 +38,7 @@
           <img v-else src="/icons/play.png" alt="">
         </div>
       </div>
-      <div class="bottom" :class="{open:progressChanging}">
+      <div class="bottom show" :class="{open:progressChanging}">
         <div class="progress_bar">
           <ProgressBar :progress="videoProgress"
                        @holdChange="progressChangingEmitted"

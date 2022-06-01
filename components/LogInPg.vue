@@ -4,7 +4,7 @@
       LogIn
     </div>
 
-    <div class="body">
+    <div class="body" >
       <div class="login">
         <div class="mail">
           <input type="text" placeholder="mail"/>
