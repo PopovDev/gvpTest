@@ -5,6 +5,17 @@
   justify-content: center;
 }
 
+
+@keyframes rotateFront {
+  from {
+      transform: rotate(0deg);
+  }
+  to {
+      transform: rotate(180deg);
+  }
+}
+
+
 $icon_height: 31px;
 $div_height: 55px;
 
@@ -13,6 +24,8 @@ $div_height: 55px;
   @include flexbox-layout;
   width: 100%;
   height: 100%;
+  min-width: 300px;
+  min-height: 260px;
   aspect-ratio: 16/9;
   position: relative;
 
@@ -214,7 +227,7 @@ $div_height: 55px;
       > .play_btn {
         cursor: pointer;
         user-select: none;
-        width: 77px;
+        width: 60px;
         aspect-ratio: 16/9;
         transition: opacity 0.5s;
         @include flexbox-layout;
@@ -294,9 +307,9 @@ $div_height: 55px;
           max-width: 50%;
 
           > .prev_video {
-            width: 40%;
+            width: 50%;
             aspect-ratio: 16/9;
-            max-height: 80%;
+            max-height: 90%;
             cursor: pointer;
             opacity: 0.7;
             transition: opacity 0.5s;
@@ -312,7 +325,7 @@ $div_height: 55px;
           }
 
           > .next_video {
-            width: 40%;
+            width: 50%;
             aspect-ratio: 16/9;
             max-height: 80%;
             cursor: pointer;
@@ -342,19 +355,28 @@ $div_height: 55px;
           max-width: 35%;
 
           > .icon {
+
             position: absolute;
             opacity: 0;
             align-items: flex-end;
             z-index: 3;
             height: $icon_height;
             aspect-ratio: 1;
-            transition: height 0.5s, opacity 0.5s;
-            background: #a20505;
+            transition: height 0.5s, opacity 0.5s, transform 0.5s;
 
-            &:hover {
+            &.clicked{
+              transform: rotate(180deg);
               ~ .settings {
                 width: 100%;
               }
+            }
+            > img {
+              height: 100%;
+              width: 100%;
+            }
+
+            &:hover {
+
             }
           }
 
@@ -365,17 +387,14 @@ $div_height: 55px;
             height: $icon_height;
             aspect-ratio: 1;
             transition: height 0.5s, opacity 0.5s;
-            background: #a20505;
-
           }
 
           > .settings {
             opacity: 0;
-            width: 0;
+            width: 0!important;
             height: $icon_height;
             transition: opacity 0.5s, width 0.5s;
             @include flexbox-layout;
-            background: #736d6d;
             max-height: 80%;
             max-width: 80%;
             justify-content: left;
@@ -389,7 +408,7 @@ $div_height: 55px;
               justify-content: space-around;
 
               > * {
-                width: $icon_height;
+                width: 50px;
                 @include flexbox-layout;
                 transition: height 0.5s, transform 0.5s, opacity 0.5s;
                 height: $icon_height;
@@ -400,32 +419,47 @@ $div_height: 55px;
                 order: 2;
                 background: #31a205;
 
+                > .graphics_icon{
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  > .sgraphics{
+                    display: flex;
+                    width: 100%;
+                    height: 100%;
+                    justify-content: center;
+                    align-items: center;
+                  }
+                }
+
                 > .graphic {
-                  width: 0;
+                  width: 50px;
+                  height: 0;
                   position: absolute;
                   opacity: 0;
                   z-index: 5;
                   transition: width 0.5s, height 0.5s, opacity 0.5s;
                   transform: translate(0, -100%);
-                  aspect-ratio: 1/2;
-                  background: #8005a2;
+                  background: rgba(63, 63, 63, 0.6);
                   @include flexbox-layout;
-                  justify-content: space-around;
+                  flex-direction: column-reverse;
+                  justify-content: space-between;
 
                   > * {
                     width: 100%;
                     height: 30%;
-                    background: #a20505;
                     cursor: pointer;
                     transition: background-color 0.5s;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
 
                     &:hover {
-                      background: #d50707;
+                      background: #606060;
                     }
                   }
 
                   > .low {
-
                   }
 
                   > .lowHd {
@@ -439,7 +473,7 @@ $div_height: 55px;
                 &:hover {
                   .graphic {
                     opacity: 1;
-                    width: $icon_height*2;
+                    height: $icon_height*4;
                   }
                 }
               }
@@ -447,12 +481,24 @@ $div_height: 55px;
               > .speed {
                 order: 1;
                 background: #31a205;
+                > .speed_icon {
+                  display: flex;
+                  justify-content: center;
+                  align-content: center;
+
+                  > .sspeed {
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                  }
+                }
 
                 > .speeds {
-                  width: 0;
+                  width: 50px;
+                  height: 0;
                   position: absolute;
                   transform: translate(0, -100%);
-                  aspect-ratio: 1/2;
                   z-index: 5;
                   opacity: 0;
                   transition: width 0.5s, height 0.5s, opacity 0.5s;
@@ -462,7 +508,7 @@ $div_height: 55px;
 
                   > * {
                     width: 100%;
-                    height: 30%;
+                    height: 25px;
                     background: #a20505;
                     cursor: pointer;
                     transition: background-color 0.5s;
@@ -472,26 +518,18 @@ $div_height: 55px;
                     }
                   }
 
-                  > .slow {
-                  }
 
-                  > .normal {
-                  }
-
-                  > .fast {
-                  }
 
                 }
 
                 &:hover {
                   .speeds {
                     opacity: 1;
-                    width: $icon_height*2;
+                    height: $icon_height*7;
                   }
                 }
 
               }
-
 
             }
 
@@ -535,9 +573,9 @@ $div_height: 55px;
         opacity: 1;
         position: absolute;
         transition: opacity 0.5s, height 0.5s, transform 0.5s;
-        height: 17px;
-        width: 40px;
-        bottom: 10px;
+        height: 35px;
+        width: 50px;
+        bottom: 0;
 
         > img {
           height: 100%;
