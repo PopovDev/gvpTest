@@ -19,24 +19,16 @@
             <img src="/icons/screen.svg" alt="">
           </div>
         </div>
-        <div class="time">
-          <div class="bg">
-            <div class="text">
-              <span class="current">{{ displayTime.current }}</span>
-              <span class="separator">/</span>
-              <span class="total">{{ displayTime.total }}</span>
-            </div>
-          </div>
-        </div>
       </div>
       <div class="volumeContainer show">
         <Volume :value="volume" @change="setVolume"></Volume>
       </div>
       <div class="middle" @click="playClick">
-        <div class="play_btn">
+        <div class="play_btn clicked">
           <img v-if="!paused" src="/icons/pause.svg" alt="">
           <img v-else src="/icons/play.svg" alt="">
         </div>
+
       </div>
       <div class="bottom show" :class="{open:progressChanging}">
         <div class="progress_bar">
@@ -50,11 +42,14 @@
         </div>
         <div class="retractable">
           <div class="left">
-            <div class="prev_video">
-              <img src="/icons/prev_arrow.svg" alt="">
-            </div>
-            <div class="next_video">
-              <img src="/icons/next_arrow.svg" alt="">
+            <div class="time">
+              <div class="bg">
+                <div class="text">
+                  <span class="current">{{ displayTime.current }}</span>
+                  <span class="separator">/</span>
+                  <span class="total">{{ displayTime.total }}</span>
+                </div>
+              </div>
             </div>
           </div>
           <div class="right">
@@ -62,55 +57,25 @@
               <img src="/icons/setting.svg" alt="">
             </div>
             <div class="pseudo_icon"></div>
-            <div class="settings">
-              <div class="menu">
-                <div class="graphics">
-                  <div class="graphics_icon">
-                    <div class="sgraphics"></div>
-                  </div>
-                  <div class="graphic">
-                    <div class="low">
-                      <div class="low_txt">360</div>
-                    </div>
-                    <div class="lowHd">
-                      <div class="low_txt">480</div>
-                    </div>
-                    <div class="hd">
-                      <div class="low_txt">720</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="speed">
-                  <div class="speed_icon">
-                    <div class="sspeed"></div>
-                  </div>
-                  <div class="speeds">
-                    <div class="half">
-
-                    </div>
-                    <div class="quarter">
-                    </div>
-                    <div class="threequarter">
-                    </div>
-                    <div class="normal">
-                    </div>
-                    <div class="fivequarter">
-                    </div>
-                    <div class="oneandhalf">
-                    </div>
-                    <div class="oneandthreequarter">
-                    </div>
-                    <div class="double">
-                    </div>
-                  </div>
-                </div>
+          </div>
+          <div class="middle">
+            <div class="play" @click="playClick">
+              <div class="play_btn">
+                <img v-if="!paused" src="/icons/pause.svg" alt="">
+                <img v-else src="/icons/play.svg" alt="">
               </div>
             </div>
+            <div class="prev_video">
+              <img src="/icons/prev_arrow.svg" alt="">
+            </div>
+            <div class="next_video">
+              <img src="/icons/next_arrow.svg" alt="">
+            </div>
           </div>
+          <div class="settings show"></div>
         </div>
-        <div class="up_arrow">
-          <img src="/icons/up_arrow.svg" alt="">
-        </div>
+      </div>
+      <div class="bg">
       </div>
     </div>
   </div>

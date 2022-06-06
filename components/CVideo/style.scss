@@ -8,10 +8,10 @@
 
 @keyframes rotateFront {
   from {
-      transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   to {
-      transform: rotate(180deg);
+    transform: rotate(180deg);
   }
 }
 
@@ -76,6 +76,7 @@ $div_height: 55px;
     overflow: hidden;
 
 
+
     > * {
       position: absolute;
       opacity: 0;
@@ -91,47 +92,11 @@ $div_height: 55px;
       right: 0;
       justify-content: flex-end;
       flex-direction: row;
+
       &:not(.show) {
-        opacity: 0!important;
+        opacity: 0 !important;
       }
 
-
-
-
-      > .time {
-        position: absolute;
-        z-index: 1;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        aspect-ratio: 2/1;
-        font-size: 30px;
-        align-content: center;
-        text-align: center;
-        display: flex;
-        justify-content: center;
-        color: #fff;
-
-        > .bg {
-
-          align-content: center;
-          z-index: 2;
-          display: flex;
-
-          text-align: center;
-
-          background: rgba(0, 0, 0, 0.3);
-          width: 30%;
-
-          > .text {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
-          }
-        }
-      }
 
       > .screen {
         order: 2;
@@ -192,7 +157,7 @@ $div_height: 55px;
 
 
     > .volumeContainer {
-      height: 23%;
+      height: 100px;
       aspect-ratio: 1;
       max-width: 40%;
       min-width: 90px;
@@ -203,7 +168,7 @@ $div_height: 55px;
       left: 1%;
 
       &:not(.show) {
-        opacity: 0!important;
+        opacity: 0 !important;
       }
 
       &:hover {
@@ -218,9 +183,7 @@ $div_height: 55px;
       height: 80%;
 
       &:not(.active) {
-        > .play_btn {
-          opacity: 1 !important;
-        }
+
       }
 
 
@@ -231,15 +194,15 @@ $div_height: 55px;
         aspect-ratio: 16/9;
         transition: opacity 0.5s;
         @include flexbox-layout;
-        opacity: 0.4;
+        opacity: 0;
+
+        &.clicked {
+          opacity: 1;
+        }
 
         > img {
           width: 100%;
           height: 100%;
-        }
-
-        &:hover {
-          opacity: 0.7;
         }
       }
     }
@@ -247,13 +210,14 @@ $div_height: 55px;
     > .bottom {
       z-index: 4;
       bottom: 0;
-      margin-bottom: -2%;
+      margin-bottom: 2px;
       width: 98%;
-      height: 43px;
+      height: 50px;
       justify-content: flex-start;
+      opacity: 1;
 
       &:not(.show) {
-        opacity: 0!important;
+        opacity: 0 !important;
       }
 
       > * {
@@ -295,24 +259,48 @@ $div_height: 55px;
           @include flexbox-layout;
         }
 
-        > .left {
-          opacity: 0;
-          transition: opacity 0.5s, margin-bottom 0.5s;
-          align-items: center;
-          justify-content: space-between;
+        > .middle {
+          order: 2;
+          width: 200px;
+          max-height: 40px;
+          @include flexbox-layout;
           flex-direction: row;
-          height: 50px;
-          width: 144px;
-          min-width: 144px;
-          max-width: 50%;
+          justify-content: space-around;
+          align-items: center;
+
+          > * {
+            @include flexbox-layout;
+            height: 30px;
+            width: 30px;
+          }
+
+          > .play {
+            order: 2;
+            cursor: pointer;
+            transition: transform 0.5s;
+
+            > .play_btn {
+              width: 100%;
+              height: 100%;
+
+              > img {
+                width: 100%;
+                height: 100%;
+              }
+            }
+            &:hover {
+                transform: scale(1.2);
+            }
+          }
 
           > .prev_video {
-            width: 50%;
+            width: 40px;
             aspect-ratio: 16/9;
             max-height: 90%;
             cursor: pointer;
             opacity: 0.7;
             transition: opacity 0.5s;
+            order: 1;
 
             > img {
               height: 100%;
@@ -325,11 +313,12 @@ $div_height: 55px;
           }
 
           > .next_video {
-            width: 50%;
+            width: 40px;
             aspect-ratio: 16/9;
             max-height: 80%;
             cursor: pointer;
             opacity: 0.6;
+            order: 3;
             transition: opacity 0.5s;
             justify-content: center;
             align-content: center;
@@ -345,7 +334,59 @@ $div_height: 55px;
           }
         }
 
+        > .left {
+          order: 1;
+          opacity: 1;
+          transition: opacity 0.5s, margin-bottom 0.5s;
+          align-items: center;
+          justify-content: space-between;
+          flex-direction: row;
+          height: 40px;
+          width: 144px;
+          min-width: 144px;
+          max-width: 50%;
+
+
+
+
+          > .time {
+            z-index: 1;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 2/1;
+            font-size: 25px;
+            align-content: center;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            color: #fff;
+
+            > .bg {
+
+              align-content: center;
+              z-index: 2;
+              display: flex;
+
+              text-align: center;
+
+              width: 100%;
+
+              > .text {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #fff;
+              }
+            }
+          }
+
+
+        }
+
         > .right {
+          order: 3;
           justify-content: flex-end !important;
           flex-direction: row;
           position: relative;
@@ -357,19 +398,21 @@ $div_height: 55px;
           > .icon {
 
             position: absolute;
-            opacity: 0;
+            opacity: 1;
             align-items: flex-end;
             z-index: 3;
             height: $icon_height;
             aspect-ratio: 1;
             transition: height 0.5s, opacity 0.5s, transform 0.5s;
 
-            &.clicked{
+            &.clicked {
               transform: rotate(180deg);
+
               ~ .settings {
                 width: 100%;
               }
             }
+
             > img {
               height: 100%;
               width: 100%;
@@ -381,7 +424,7 @@ $div_height: 55px;
           }
 
           > .pseudo_icon {
-            opacity: 0;
+            opacity: 1;
             order: 2;
             align-items: flex-end;
             height: $icon_height;
@@ -389,9 +432,27 @@ $div_height: 55px;
             transition: height 0.5s, opacity 0.5s;
           }
 
-          > .settings {
-            opacity: 0;
-            width: 0!important;
+
+
+        }
+
+        > .settings{
+          position: absolute;
+          width: 200px;
+          height: 100px;
+          background: #000;
+          right: 0;
+          opacity: 0;
+          transition: opacity 0.5s;
+          bottom: 50px;
+
+          &.show {
+            opacity: 1;
+          }
+
+          > .settingsff {
+            opacity: 1;
+            width: 0 !important;
             height: $icon_height;
             transition: opacity 0.5s, width 0.5s;
             @include flexbox-layout;
@@ -419,11 +480,12 @@ $div_height: 55px;
                 order: 2;
                 background: #31a205;
 
-                > .graphics_icon{
+                > .graphics_icon {
                   display: flex;
                   justify-content: center;
                   align-items: center;
-                  > .sgraphics{
+
+                  > .sgraphics {
                     display: flex;
                     width: 100%;
                     height: 100%;
@@ -481,6 +543,7 @@ $div_height: 55px;
               > .speed {
                 order: 1;
                 background: #31a205;
+
                 > .speed_icon {
                   display: flex;
                   justify-content: center;
@@ -519,7 +582,6 @@ $div_height: 55px;
                   }
 
 
-
                 }
 
                 &:hover {
@@ -537,59 +599,27 @@ $div_height: 55px;
               width: $icon_height*4;
             }
           }
-
-
         }
       }
 
-      @mixin openState {
-        height: 66px;
-        > .up_arrow {
-          transform: translate(0, -200%);
-          opacity: 0;
-        }
-        > .retractable {
-          transform: translate(0, 0) !important;
-
-          > .left {
-            opacity: 1;
-          }
-
-          > .right {
-            > .settings {
-              opacity: 1;
-            }
-
-            > .icon {
-              opacity: 1;
-            }
-
-
-          }
-        }
-      }
-
-      > .up_arrow {
-        opacity: 1;
-        position: absolute;
-        transition: opacity 0.5s, height 0.5s, transform 0.5s;
-        height: 35px;
-        width: 50px;
-        bottom: 0;
-
-        > img {
-          height: 100%;
-          width: 100%;
-        }
-      }
 
       &:hover {
-        @include openState;
+
       }
 
       &.open {
-        @include openState;
+
       }
+    }
+
+    > .bg{
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 20%;
+      background-image: linear-gradient(to top, rgb(0, 0, 0), rgba(255, 255, 255, 0));
+      opacity: 0.5;
+      z-index: -1;
     }
 
     @mixin showState {
@@ -600,15 +630,7 @@ $div_height: 55px;
       .top, .volumeContainer {
         opacity: 0.6;
       }
-      .bottom {
-        opacity: 1;
-        margin-bottom: 0;
 
-        .retractable {
-          transform: translate(0, 100%);
-
-        }
-      }
     }
 
     &:hover {
