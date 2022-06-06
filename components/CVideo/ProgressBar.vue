@@ -5,6 +5,7 @@
       ref="progress"
       @mousedown="onMouseDown"
     >
+      <div class="beforeDisplay">
       <div class="display">
         <div class="bar" :style="{'width': progress+'%'}">
         </div>
@@ -15,6 +16,7 @@
                :style="{'width': el.width+'%', 'margin-left': el.left+'%'}"
           ></div>
         </div>
+      </div>
       </div>
     </div>
   </div>
@@ -42,6 +44,7 @@ export default class CVideo extends Vue {
     this.hold = hold;
     return hold;
   }
+
   public loadedArray: IBarNode[] = [];
   private hold: boolean = false;
 
@@ -98,7 +101,7 @@ export default class CVideo extends Vue {
 
 <style scoped lang="sass">
 $background-color: rgba(33, 32, 32, 0.4)
-$height: 35%
+$height: 40%
 $progress-color: rgba(63, 167, 242, 0.79)
 $loaded-color: rgba(151, 252, 140, 0.44)
 *
@@ -112,22 +115,31 @@ $loaded-color: rgba(151, 252, 140, 0.44)
     flex-direction: column
     justify-content: center
 
-    > .display
-      height: $height
-      background: $background-color
-      position: relative
 
-      > .bar
-        background: $progress-color
-        position: absolute
-        z-index: 1
+    > .beforeDisplay
+      height: 60%
 
-      > .downloaded
+      > .display
+        height: $height
+        background: $background-color
         position: relative
+        transition: height .5s
 
-        > *
-          background: $loaded-color
+        > .bar
+          background: $progress-color
           position: absolute
+          z-index: 1
+
+        > .downloaded
+          position: relative
+
+          > *
+            background: $loaded-color
+            position: absolute
+
+      &:hover
+         > .display
+          height: 70% !important
 
 
 </style>

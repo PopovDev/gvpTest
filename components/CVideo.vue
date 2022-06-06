@@ -56,7 +56,6 @@
             <div class="icon clicked">
               <img src="/icons/setting.svg" alt="">
             </div>
-            <div class="pseudo_icon"></div>
           </div>
           <div class="middle">
             <div class="play" @click="playClick">
@@ -72,7 +71,9 @@
               <img src="/icons/next_arrow.svg" alt="">
             </div>
           </div>
-          <div class="settings show"></div>
+          <div class="settings show">
+
+          </div>
         </div>
       </div>
       <div class="bg">
